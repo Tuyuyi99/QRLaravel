@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use QrCode;
 use App\Models\Qr;
 use Illuminate\Support\Facades\Storage;
+use QRcodePNG;
 
 class QrController extends Controller
 {
@@ -30,7 +31,7 @@ class QrController extends Controller
 
       $ruta = "assets/img/qr/" . $qr->nombre;
 
-      QrCode::generate($qr->enlace, public_path('assets/img/qr/' . $qr->nombre . '.png'));
+      QrCode::generate($qr->enlace, public_path('assets/img/qr/' . $qr->nombre . '.svg'));
 
       $qr->save();
       return redirect()->route('qr.index');

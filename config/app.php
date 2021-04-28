@@ -139,6 +139,7 @@ return [
         /*
          * Laravel Framework Service Providers...
          */
+        LaravelQRCode\Providers\QRCodeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Illuminate\Auth\AuthServiceProvider::class,
@@ -192,6 +193,7 @@ return [
 
     'aliases' => [
 
+        'QRCodePNG' => LaravelQRCode\Facades\QRCode::class,
         'PDF' => Barryvdh\DomPDF\Facade::class,
         'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
         'App' => Illuminate\Support\Facades\App::class,
