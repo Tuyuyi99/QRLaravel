@@ -8,11 +8,8 @@
                 <span>Nombre:</span>
                 <input type="text" name="nombre" value="{{ $qr->nombre }}">
 
-                <span>Enlace (Opcional):</span>
+                <span>Enlace</span>
                 <input type="text" name="enlace" value="{{ $qr->enlace }}">
-
-                <span>Documento (Opcional):</span>
-                <input type="file" name="documento" value="{{ $qr->documento }}">
 
             </div>
             @method("PATCH")
@@ -25,12 +22,9 @@
                     <span>Nombre:</span>
                     <input type="text" name="nombre">
 
-                    <span>Enlace (Opcional):</span>
+                    <span>Enlace</span>
                     <input type="text" name="enlace">
-
-                    <span>Documento (Opcional):</span>
-                    <input type="file" name="documento">
-
+                    
                 </div>
 
             @endisset

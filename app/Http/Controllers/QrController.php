@@ -54,16 +54,16 @@ class QrController extends Controller
 
     public function update(Request $request){
       $qr = Qr::find($request->id);
-      $nombreOriginal = $qr->nombre;
+      $nombreAntiguo = $qr->nombre;
       $qr->nombre = $request->nombre;
       $nombreNuevo = $qr->nombre;
 
       $ruta = "assets/img/qr/";
 
-      $rutaAntigua = "assets/img/qr/" . $nombreOriginal . '/';
-      if($nombreOriginal != $qr->nombre){
-        rename($rutaAntigua . $nombreOriginal . '.svg', $rutaAntigua . $nombreNuevo . '.svg');
-        rename($ruta . $nombreOriginal, $ruta . $nombreNuevo);
+      $rutaAntigua = "assets/img/qr/" . $nombreAntiguo . '/';
+      if($nombreAntiguo != $qr->nombre){
+        rename($rutaAntigua . $nombreAntiguo . '.svg', $rutaAntigua . $nombreNuevo . '.svg');
+        rename($ruta . $nombreAntiguo, $ruta . $nombreNuevo);
     }
       $qr->enlace = $request->enlace;
       $qr->documento = $request->documento;
