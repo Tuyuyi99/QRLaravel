@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use QrCode;
 use App\Models\Qr;
 use Illuminate\Support\Facades\Storage;
-use QRcodePNG;
+use Illuminate\Filesystem\Filesystem;
 
 class QrController extends Controller
 {
@@ -31,7 +31,11 @@ class QrController extends Controller
 
       $ruta = "assets/img/qr/" . $qr->nombre;
 
-      QrCode::generate($qr->enlace, public_path('assets/img/qr/' . $qr->nombre . '.svg'));
+      if(!mkdir($ruta, 0777, true)) {
+        die('Fallo al crear las carpetas...');
+    }
+
+      QrCode::generate($qr->enlace, public_path('assets/img/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
 
       $qr->save();
       return redirect()->route('qr.index');
@@ -50,7 +54,17 @@ class QrController extends Controller
 
     public function update(Request $request){
       $qr = Qr::find($request->id);
+      $nombreOriginal = $qr->nombre;
       $qr->nombre = $request->nombre;
+      $nombreNuevo = $qr->nombre;
+
+      $ruta = "assets/img/qr/";
+
+      $rutaAntigua = "assets/img/qr/" . $nombreOriginal . '/';
+      if($nombreOriginal != $qr->nombre){
+        rename($rutaAntigua . $nombreOriginal . '.svg', $rutaAntigua . $nombreNuevo . '.svg');
+        rename($ruta . $nombreOriginal, $ruta . $nombreNuevo);
+    }
       $qr->enlace = $request->enlace;
       $qr->documento = $request->documento;
       $qr->save();
@@ -59,6 +73,15 @@ class QrController extends Controller
 
     public function destroy($id){
       $qr = Qr::find($id);
+
+      $nombre = $qr->nombre;
+
+      $ruta = "assets/img/qr/" . $qr->nombre;
+      $file = new Filesystem;
+      $file->cleanDirectory($ruta);
+      
+      rmdir($ruta);
+
       $qr->delete();
       
       return redirect()->route('qr.index');
