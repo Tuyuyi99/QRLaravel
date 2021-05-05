@@ -2,34 +2,33 @@
 @section('title', 'Panel Principal')
 @section('content')
 
-    @isset($qr)
-        <form action="{{ route('qr.update', ['id' => $qr->id]) }}" method="POST">
-            <div style="height: 100px; margin-right: 5px;">
-                <span>Nombre:</span>
-                <input type="text" name="nombre" value="{{ $qr->nombre }}">
+@isset($qr)
+    <form action="{{ route('qr.update', ['id' => $qr->id]) }}" method="POST">
+        <div style="height: 100px; margin-right: 5px;">
+            <span>Nombre:</span>
+            <input type="text" name="nombre" value="{{ $qr->nombre }}">
 
-                <span>Enlace</span>
-                <input type="text" name="enlace" value="{{ $qr->enlace }}">
+            <span>Enlace</span>
+            <input type="text" name="enlace" value="{{ $qr->enlace }}">
 
-            </div>
-            @method("PATCH")
+        </div>
+        @method("PATCH")
+    @else
 
-        @else
+    <form action="{{ route('qr.store') }}" method="POST">
+        <div class="col-12 col-xxl-6 d-flex align-items-center" style="height: 100px; margin-right: 5px;">
 
-            <form action="{{ route('qr.store') }}" method="POST">
-                <div class="col-12 col-xxl-6 d-flex align-items-center" style="height: 100px; margin-right: 5px;">
+            <span>Nombre:</span>
+            <input type="text" name="nombre">
 
-                    <span>Nombre:</span>
-                    <input type="text" name="nombre">
-
-                    <span>Enlace</span>
-                    <input type="text" name="enlace">
+            <span>Enlace</span>
+            <input type="text" name="enlace">
                     
-                </div>
+        </div>
 
-            @endisset
-            @csrf
+        @endisset
+        @csrf
 
-            <input type="submit" class="btn btn-outline-secondary">
-        </form>
-    @endsection
+        <input type="submit" class="btn btn-outline-secondary">
+    </form>
+@endsection

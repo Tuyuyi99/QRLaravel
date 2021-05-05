@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Qr extends Model
 {
     use HasFactory;
+
+    
+    public function acortador() {
+        return $this->hasMany(Acortador::class, 'id_qr');
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use QrCode;
 use App\Models\Qr;
+use App\Models\Acortador;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\Filesystem;
 
@@ -12,14 +13,16 @@ class QrController extends Controller
 {
     public function index()
     {
-      $QrList = Qr::All();
-      $data['QrList'] = $QrList;
+      $qrList = Qr::All();
+      $acortadorList = Acortador::all();
+      $data['qrList'] = $qrList;
+      $data ['acortadorListQr'] = $acortadorList;
 
       return view('admin/index', $data);
     }
 
     public function create(){
-      $Qr = Qr::all();
+      $qr = Qr::all();
       return view('admin/qrForm');
     }
 
@@ -27,12 +30,11 @@ class QrController extends Controller
       $qr = new Qr();
       $qr->nombre = $request->nombre;
       $qr->enlace = $request->enlace;
-      $qr->documento = $request->documento;
 
       $ruta = "assets/img/qr/" . $qr->nombre;
 
       if(!mkdir($ruta, 0777, true)) {
-        die('Fallo al crear las carpetas...');
+        die('Fallo al crear las carpetas.');
     }
 
       QrCode::generate($qr->enlace, public_path('assets/img/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
@@ -59,14 +61,13 @@ class QrController extends Controller
       $nombreNuevo = $qr->nombre;
 
       $ruta = "assets/img/qr/";
-
       $rutaAntigua = "assets/img/qr/" . $nombreAntiguo . '/';
+      
       if($nombreAntiguo != $qr->nombre){
         rename($rutaAntigua . $nombreAntiguo . '.svg', $rutaAntigua . $nombreNuevo . '.svg');
         rename($ruta . $nombreAntiguo, $ruta . $nombreNuevo);
     }
       $qr->enlace = $request->enlace;
-      $qr->documento = $request->documento;
       $qr->save();
       return redirect()->route('qr.index');
   }
@@ -74,13 +75,15 @@ class QrController extends Controller
     public function destroy($id){
       $qr = Qr::find($id);
 
-      $nombre = $qr->nombre;
-
       $ruta = "assets/img/qr/" . $qr->nombre;
       $file = new Filesystem;
       $file->cleanDirectory($ruta);
       
       rmdir($ruta);
+
+      foreach($qr->id_category as $qrAcortador){
+        $qrAcortador->delete();
+        }
 
       $qr->delete();
       

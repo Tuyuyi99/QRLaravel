@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateQrsTable extends Migration
+class CreateAcortadoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreateQrsTable extends Migration
      */
     public function up()
     {
-        Schema::create('qrs', function (Blueprint $table) {
+        Schema::create('acortadores', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->string('enlace');
+            $table->string('codigo');
+            $table->string('link');
+            $table->integer('id_qr')->unique();
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateQrsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('qrs');
+        Schema::dropIfExists('acortadores');
     }
 }
