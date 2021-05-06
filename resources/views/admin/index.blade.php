@@ -5,27 +5,37 @@
 <div class="container">
 
   <a href="{{ route('qr.create') }}">Nuevo</a> <br>
-  <a href="{{ route('acortador.create') }}">Acortar enlace</a>
 
-@foreach ($acortadorListQr as $acortadorLink)
-  @foreach ($qrList as $qr) 
-  @if ($acortadorLink->id_qr == $qr->id)
+  @foreach ($qrList as $qr)
   <br>
-   {{QrCode::size(200)
-   ->generate(route('acortar.link', $acortadorLink->codigo))}}
 
-      <a href="{{ route('acortador.edit', $acortadorLink->id) }}">Editar</a>
+  <form action="{{ route('qr.update', ['id' => $qr->id]) }}" method="POST">
+    @method("PATCH")
+    @csrf
+    <h3>Nombre: <input id="nombre" type="text" name="nombre" value="{{ $qr->nombre }}"
+    size="10" style="border:none; border-bottom:solid 1px;"></h3>
+
+    <button type="submit">Modificar nombre</button>
+
+    <h3>Enlace seleccionado: <input readonly type="text" name="enlace"
+    value="{{ $qr->enlace }}" size="80" style="border:none; border-bottom:solid 1px;">
+    <br>
+
+    {{ QrCode::size(200)      
+      ->generate(route('acortar.link', $qr->codigo)) }}
+
+      <br>
+      <a href="{{ route('acortar.link', $qr->codigo) }}" target="_blank">{{ route('acortar.link', $qr->codigo) }}</a> <br>
+      <a href="{{ route('acortador.edit', $qr->id) }}">Editar enlace a redireccionar</a>
     </form>
     <form action="{{ route('qr.destroy', $qr->id) }}" method="POST">
       @csrf
       @method("DELETE")
-      <button onclick="return confirm('¿Seguro que quieres eliminarlo?')" type="submit">Borrar</button>
-      <a href="{{ route('acortar.link', $acortadorLink->codigo) }}" target="_blank">{{ route('acortar.link', $acortadorLink->codigo) }}</a>
+      <button onclick="return confirm('¿Seguro que quieres eliminarlo?')" type="submit">Borrar todo</button>
+      <br>
   </form>
-  @endif
-  @endforeach
 
-@endforeach 
+@endforeach
 </div>
 
 @endsection

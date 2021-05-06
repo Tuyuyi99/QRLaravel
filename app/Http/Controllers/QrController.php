@@ -5,41 +5,40 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use QrCode;
 use App\Models\Qr;
-use App\Models\Acortador;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class QrController extends Controller
 {
     public function index()
     {
       $qrList = Qr::All();
-      $acortadorList = Acortador::all();
       $data['qrList'] = $qrList;
-      $data ['acortadorListQr'] = $acortadorList;
 
       return view('admin/index', $data);
     }
 
     public function create(){
       $qr = Qr::all();
+      //dd($qr);
       return view('admin/qrForm');
     }
 
     public function store(Request $request){
       $qr = new Qr();
+
+      $request->validate([
+        'enlace' => 'required|url'
+     ]);
+
       $qr->nombre = $request->nombre;
       $qr->enlace = $request->enlace;
-
-      $ruta = "assets/img/qr/" . $qr->nombre;
-
-      if(!mkdir($ruta, 0777, true)) {
-        die('Fallo al crear las carpetas.');
-    }
-
-      QrCode::generate($qr->enlace, public_path('assets/img/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+      $qr->codigo = Str::random(6);
 
       $qr->save();
+
       return redirect()->route('qr.index');
     }
 
@@ -56,17 +55,17 @@ class QrController extends Controller
 
     public function update(Request $request){
       $qr = Qr::find($request->id);
-      $nombreAntiguo = $qr->nombre;
+      // $nombreAntiguo = $qr->nombre;
       $qr->nombre = $request->nombre;
-      $nombreNuevo = $qr->nombre;
+      // $nombreNuevo = $qr->nombre;
 
-      $ruta = "assets/img/qr/";
-      $rutaAntigua = "assets/img/qr/" . $nombreAntiguo . '/';
+    //   $ruta = "assets/img/qr/";
+    //   $rutaAntigua = "assets/img/qr/" . $nombreAntiguo . '/';
       
-      if($nombreAntiguo != $qr->nombre){
-        rename($rutaAntigua . $nombreAntiguo . '.svg', $rutaAntigua . $nombreNuevo . '.svg');
-        rename($ruta . $nombreAntiguo, $ruta . $nombreNuevo);
-    }
+    //   if($nombreAntiguo != $qr->nombre){
+    //     rename($rutaAntigua . $nombreAntiguo . '.svg', $rutaAntigua . $nombreNuevo . '.svg');
+    //     rename($ruta . $nombreAntiguo, $ruta . $nombreNuevo);
+    // }
       $qr->enlace = $request->enlace;
       $qr->save();
       return redirect()->route('qr.index');
@@ -75,19 +74,23 @@ class QrController extends Controller
     public function destroy($id){
       $qr = Qr::find($id);
 
-      $ruta = "assets/img/qr/" . $qr->nombre;
-      $file = new Filesystem;
-      $file->cleanDirectory($ruta);
+      // $ruta = "assets/img/qr/" . $qr->nombre;
+      // $file = new Filesystem;
+      // $file->cleanDirectory($ruta);
       
-      rmdir($ruta);
-
-      foreach($qr->id_category as $qrAcortador){
-        $qrAcortador->delete();
-        }
+      // rmdir($ruta);
 
       $qr->delete();
       
       return redirect()->route('qr.index');
+    }
+
+    public function acortarLink($codigo)
+    {
+
+        $find = Qr::where('codigo', $codigo)->first();
+
+        return redirect($find->enlace);
     }
 
 }

@@ -17,6 +17,7 @@ class CreateQrsTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('enlace');
+            $table->string('codigo');
             $table->timestamps();
         });
     }

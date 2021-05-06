@@ -16,19 +16,24 @@
     @else
 
     <form action="{{ route('qr.store') }}" method="POST">
-        <div class="col-12 col-xxl-6 d-flex align-items-center" style="height: 100px; margin-right: 5px;">
+        <div style="height: 100px; margin-right: 5px;">
 
             <span>Nombre:</span>
             <input type="text" name="nombre">
+
+            
 
             <span>Enlace</span>
             <input type="text" name="enlace">
                     
         </div>
 
+
         @endisset
         @csrf
 
         <input type="submit" class="btn btn-outline-secondary">
     </form>
+    
+    
 @endsection

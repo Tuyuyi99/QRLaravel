@@ -31,4 +31,4 @@ Route::get('admin/acortadorEdit/{id}', 'App\Http\Controllers\AcortadorController
 Route::patch('admin/acortador/update/{id}', 'App\Http\Controllers\AcortadorController@update')->name('acortador.update');
 Route::delete('admin/acortador/destroy/{id}', 'App\Http\Controllers\AcortadorController@destroy')->name('acortador.destroy');
 Route::post('admin/acortador/store', '\App\Http\Controllers\AcortadorController@store')->name('acortador.store');
-Route::get('{codigo}', '\App\Http\Controllers\AcortadorController@acortarLink')->name('acortar.link');
+Route::get('{codigo}', '\App\Http\Controllers\QrController@acortarLink')->name('acortar.link');
