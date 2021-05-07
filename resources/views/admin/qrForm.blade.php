@@ -19,9 +19,7 @@
         <div style="height: 100px; margin-right: 5px;">
 
             <span>Nombre:</span>
-            <input type="text" name="nombre">
-
-            
+            <input type="text" name="nombre">    
 
             <span>Enlace</span>
             <input type="text" name="enlace">
