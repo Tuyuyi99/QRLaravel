@@ -22,7 +22,6 @@ class QrController extends Controller
 
     public function create(){
       $qr = Qr::all();
-      //dd($qr);
       return view('admin/qrForm');
     }
 
