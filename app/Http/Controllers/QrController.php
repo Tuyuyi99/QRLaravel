@@ -42,7 +42,8 @@ class QrController extends Controller
         die('Fallo al crear las carpetas.');
     }
 
-      QrCode::generate(route('acortar.link', $qr->codigo), public_path('assets/img/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+      QrCode::size(500)
+      ->generate(route('acortar.link', $qr->codigo), public_path('assets/img/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
 
       $qr->save();
 
