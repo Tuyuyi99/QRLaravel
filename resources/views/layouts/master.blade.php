@@ -11,6 +11,7 @@
             <ul>
                 <li><a href="{{ route('servicio.index') }}">Listado Servicios</a></li>
                 <li><a href="{{ route('qr.index') }}">Listado QRs</a></li>
+                <li><a href="{{ route('documento.index') }}">Listado Documentos</a></li>
             </ul>
         </div>
         <div>@yield("content")</div>

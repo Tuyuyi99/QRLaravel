@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use QrCode;
 use App\Models\Qr;
+use App\Models\Documento;
+use App\Models\Servicio;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-use App\Models\Servicio;
 
 class QrController extends Controller
 {
@@ -25,21 +26,21 @@ class QrController extends Controller
 
     public function create(){
       $servicios = Servicio::all();
-      return view('admin/qrForm', ['serviciosList' => $servicios]);
+      $documentos = Documento::all();
+      return view('admin/qrForm', ['serviciosList' => $servicios], ['documentosList' => $documentos]);
     }
 
     public function store(Request $request){
       $qr = new Qr();
       $servicios = Servicio::find($request->id_servicio);
-
-      $request->validate([
-        'enlace' => 'required|url'
-     ]);
+      $documentos = Documento::find($request->id_documento);
 
       $qr->nombre = $request->nombre;
+      $qr->codigo = Str::random(6);      
+      $qr->id_documento = $request->id_documento;    
       $qr->enlace = $request->enlace;
-      $qr->codigo = Str::random(6);
       $qr->id_servicio = $request->id_servicio;
+
 
       $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre;
 

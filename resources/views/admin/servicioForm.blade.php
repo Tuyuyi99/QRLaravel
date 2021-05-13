@@ -5,7 +5,6 @@
 @isset($servicio)
     <form action="{{ route('servicio.update', ['id' => $servicio->id]) }}" method="POST">
         <div style="height: 100px; margin-right: 5px;">
-
             <span>Nombre del servicio:</span>
             <input type="text" name="servicio" value="{{ $servicio->servicio }}">
         </div>

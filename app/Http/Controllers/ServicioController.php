@@ -86,7 +86,7 @@ class ServicioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $servicio = servicio::find($request->id);
+        $servicio = Servicio::find($request->id);
 
         $nombreAntiguo = $servicio->servicio;
         $servicio->servicio = $request->servicio;

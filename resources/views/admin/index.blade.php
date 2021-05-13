@@ -77,5 +77,29 @@
       </form>
       @endforeach
   @endif
+
+  @if (isset($documentosList))
+  <a class="button addbutton" href="{{ route('documento.create') }}">Nuevo Documento <i class="fas fa-plus-circle"></i></i></a>
+    @foreach ($documentosList as $documento)
+      <form action="{{ route('documento.update', ['id' => $documento->id]) }}" method="POST">
+        @method("PATCH")
+        @csrf
+        <h3>Ruta del documento: <input id="documento" size="40" type="text" name="documento" value="{{ url('assets/PDFs/' . $documento->nombre) }}"
+        style="border:none; border-bottom:solid 1px;"></h3>
+
+        <button class ="button modifybutton" type="submit">Modificar <i class="far fa-save"></i></button>
+
+        <a class="button editbutton" href="{{ route('documento.edit', $documento->id) }}">Editar <i class="fa fa-edit"></i></a>
+
+      </form>
+      <form action="{{ route('documento.destroy', $documento->id) }}" method="POST">
+        @csrf
+        @method("DELETE")
+        <button class="button deletebutton" onclick="return confirm('¿Seguro que quieres eliminarlo?')" type="submit">Borrar <i class="fa fa-trash-alt"></i></button>
+        <hr style="border:1px solid black;">
+      </form>
+    @endforeach
+@endif
+
 </div>
 @endsection
