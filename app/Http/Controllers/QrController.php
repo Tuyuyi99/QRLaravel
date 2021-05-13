@@ -9,24 +9,28 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use App\Models\Servicio;
 
 class QrController extends Controller
 {
     public function index()
     {
       $qrList = Qr::All();
+      $serviciosListQr = Servicio::All();
       $data['qrList'] = $qrList;
+      $data['serviciosListQr'] = $serviciosListQr;
 
       return view('admin/index', $data);
     }
 
     public function create(){
-      $qr = Qr::all();
-      return view('admin/qrForm');
+      $servicios = Servicio::all();
+      return view('admin/qrForm', ['serviciosList' => $servicios]);
     }
 
     public function store(Request $request){
       $qr = new Qr();
+      $servicios = Servicio::find($request->id_servicio);
 
       $request->validate([
         'enlace' => 'required|url'
@@ -35,15 +39,18 @@ class QrController extends Controller
       $qr->nombre = $request->nombre;
       $qr->enlace = $request->enlace;
       $qr->codigo = Str::random(6);
+      $qr->id_servicio = $request->id_servicio;
 
-      $ruta = "assets/img/qr/" . $qr->nombre;
+      $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre;
+
+
 
       if(!mkdir($ruta, 0777, true)) {
         die('Fallo al crear las carpetas.');
     }
 
       QrCode::size(500)
-      ->generate(route('acortar.link', $qr->codigo), public_path('assets/img/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+      ->generate(route('acortar.link', $qr->codigo), public_path('assets/img/qr/' . $servicios->servicio . '/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
 
       $qr->save();
 
@@ -52,28 +59,42 @@ class QrController extends Controller
 
     public function show($id){
       $qr = Qr::find($id);
-      return view("admin/index");
+      return view("admin/qr");
     }
 
     public function edit($id){
       $qr = Qr::find($id);
+      $servicios = Servicio::all();
       $data["qr"] = $qr;
+      $data["serviciosList"] = $servicios;
       return view('admin/qrForm', $data);
     }
 
     public function update(Request $request){
       $qr = Qr::find($request->id);
+      $servicioAntiguo = DB::table('servicios')->where('id', $qr->id_servicio)->first();
+      $servicioNuevo = Servicio::find($request->id_servicio);
+
       $nombreAntiguo = $qr->nombre;
       $qr->nombre = $request->nombre;
       $nombreNuevo = $qr->nombre;
+      $qr->id_servicio = $request->id_servicio;
 
-      $ruta = "assets/img/qr/";
-      $rutaAntigua = "assets/img/qr/" . $nombreAntiguo . '/';
+      $rutaNueva = "assets/img/qr/" . $servicioNuevo->servicio . '/' . $nombreNuevo;
+      $rutaAntigua = "assets/img/qr/" . $servicioAntiguo->servicio . '/' . $nombreAntiguo;
+
+      $file = new Filesystem;
+      $file->cleanDirectory($rutaAntigua);
+
+      rmdir($rutaAntigua);
       
-      if($nombreAntiguo != $qr->nombre){
-        rename($rutaAntigua . $nombreAntiguo . '.svg', $rutaAntigua . $nombreNuevo . '.svg');
-        rename($ruta . $nombreAntiguo, $ruta . $nombreNuevo);
+      if(!mkdir($rutaNueva, 0777, true)) {
+        die('Fallo al crear las carpetas.');
     }
+
+    QrCode::size(500)
+      ->generate(route('acortar.link', $qr->codigo), public_path('assets/img/qr/' . $servicioNuevo->servicio . '/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+
       $qr->enlace = $request->enlace;
       $qr->save();
       return redirect()->route('qr.index');
@@ -81,12 +102,13 @@ class QrController extends Controller
 
     public function destroy($id){
       $qr = Qr::find($id);
+      $servicios = DB::table('servicios')->where('id', $qr->id_servicio)->first();
 
-      $ruta = "assets/img/qr/" . $qr->nombre;
+      $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre;
       $file = new Filesystem;
       $file->cleanDirectory($ruta);
       
-      rmdir($ruta);
+      rmdir($ruta); 
 
       $qr->delete();
       

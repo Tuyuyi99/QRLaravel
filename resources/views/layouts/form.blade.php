@@ -7,12 +7,6 @@
         <link rel="stylesheet" href="{{ url('assets/css/styles.css') }}">
     </head>
     <body>
-        <div class="center">
-            <ul>
-                <li><a href="{{ route('servicio.index') }}">Listado Servicios</a></li>
-                <li><a href="{{ route('qr.index') }}">Listado QRs</a></li>
-            </ul>
-        </div>
         <div>@yield("content")</div>
     </body>
 </html>
