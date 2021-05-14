@@ -18,8 +18,8 @@ class CreateQrsTable extends Migration
             $table->string('nombre', 1000);
             $table->string('enlace', 1000)->nullable();
             $table->string('codigo');
+            $table->string('documento')->nullable();
             $table->integer('id_servicio');
-            $table->integer('id_documento')->nullable();
             $table->timestamps();
         });
     }

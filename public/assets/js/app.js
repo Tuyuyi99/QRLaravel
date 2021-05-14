@@ -14,8 +14,3 @@ $( document ).ready(function() {
     });
 });
 
-
-function rellenarInput() {
-    document.getElementById('rutaDocumento').value = document.getElementById('enlace').value;
-}
-

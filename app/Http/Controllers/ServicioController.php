@@ -43,9 +43,14 @@ class ServicioController extends Controller
         $servicio = new Servicio();
         $servicio->servicio = $request->servicio;
 
-        $ruta = "assets/img/qr/" . $servicio->servicio;
+        $rutaEnlace = "assets/img/qr/" . $servicio->servicio;
+        $rutaPDF = "assets/PDFs/" . $servicio->servicio;
 
-      if(!mkdir($ruta, 0777, true)) {
+      if(!mkdir($rutaEnlace, 0777, true)) {
+        die('Fallo al crear las carpetas.');
+      }
+
+      if(!mkdir($rutaPDF, 0777, true)) {
         die('Fallo al crear las carpetas.');
       }
 
@@ -92,11 +97,15 @@ class ServicioController extends Controller
         $servicio->servicio = $request->servicio;
         $nombreNuevo = $servicio->servicio;
 
-        $ruta = "assets/img/qr/";
-        $rutaAntigua = "assets/img/qr/" . $nombreAntiguo . '/';
+        $rutaEnlace = "assets/img/qr/";
+        $rutaDocumento = "assets/PDFs/";
       
       if($nombreAntiguo != $servicio->servicio){
-        rename($ruta . $nombreAntiguo, $ruta . $nombreNuevo);
+        rename($rutaEnlace . $nombreAntiguo, $rutaEnlace . $nombreNuevo);
+    }
+
+    if($nombreAntiguo != $servicio->servicio){
+        rename($rutaDocumento . $nombreAntiguo, $rutaDocumento . $nombreNuevo);
     }
 
         $servicio->save();
@@ -113,11 +122,14 @@ class ServicioController extends Controller
     {
         $servicio = Servicio::find($id);
 
-        $ruta = "assets/img/qr/" . $servicio->servicio;
+        $rutaEnlace = "assets/img/qr/" . $servicio->servicio;
+        $rutaDocumento = "assets/PDFs/" . $servicio->servicio;
         $file = new Filesystem;
-        $file->cleanDirectory($ruta);
+        $file->cleanDirectory($rutaEnlace);
+        $file->cleanDirectory($rutaDocumento);
         
-        rmdir($ruta);
+        rmdir($rutaEnlace);
+        rmdir($rutaDocumento);
   
         $servicio->delete();
         return redirect()->route('servicio.index');

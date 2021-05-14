@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QrController;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,12 +20,15 @@ Route::get('admin', 'App\Http\Controllers\ServicioController@index')->name('main
 //CRUD de QRs
 
 Route::get('admin/qr', 'App\Http\Controllers\QrController@index')->name('qr.index');
-Route::get('admin/qrForm', 'App\Http\Controllers\QrController@create')->name('qr.create');
-Route::post('admin/store/qr', '\App\Http\Controllers\QrController@store')->name('qr.store');
+Route::get('admin/qrFormDocumento', 'App\Http\Controllers\QrController@createDocumento')->name('qr.createDocumento');
+Route::get('admin/qrFormEnlace', 'App\Http\Controllers\QrController@createEnlace')->name('qr.createEnlace');
+Route::post('admin/subirDocumento/qr', '\App\Http\Controllers\QrController@subirDocumento')->name('qr.subirDocumento');
+Route::post('admin/storeEnlace/qr', '\App\Http\Controllers\QrController@store')->name('qr.storeEnlace');
 Route::patch('admin/update/qr/{id}', 'App\Http\Controllers\QrController@update')->name('qr.update');
 Route::delete('admin/destroy/qr/{id}', 'App\Http\Controllers\QrController@destroy')->name('qr.destroy');
 Route::get('admin/edit/qr/{id}', 'App\Http\Controllers\QrController@edit')->name('qr.edit');
-Route::get('{codigo}', '\App\Http\Controllers\QrController@acortarLink')->name('acortar.link');
+Route::get('Pdf/{codigo}', '\App\Http\Controllers\QrController@acortarLinkDocumento')->name('acortar.linkDocumento');
+Route::get('{codigo}', '\App\Http\Controllers\QrController@acortarLinkEnlace')->name('acortar.linkEnlace');
 
 //CRUD de Servicios
 
