@@ -67,7 +67,7 @@
         <div class="qr">{{ QrCode::size(300)      
         ->generate(route('acortar.linkDocumento', $qr->codigo)) }} </div>
 
-        <a class="button shortlink" href="{{ route('acortar.linkDocumento', $qr->codigo) }}" target="_blank"> <i class="fa fa-link"></i>
+        <a class="button shortlink" href="{{ Response::make(file_get_contents($qr->documento))}}" target="_blank"> <i class="fa fa-link"></i>
         {{ route('acortar.linkDocumento', $qr->codigo) }} </a> <br>
       @else
 

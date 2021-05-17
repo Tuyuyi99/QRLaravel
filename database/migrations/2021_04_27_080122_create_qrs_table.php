@@ -13,13 +13,16 @@ class CreateQrsTable extends Migration
      */
     public function up()
     {
+        Schema::enableForeignKeyConstraints();
         Schema::create('qrs', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 1000);
             $table->string('enlace', 1000)->nullable();
             $table->string('codigo');
             $table->string('documento')->nullable();
-            $table->integer('id_servicio');
+            $table->foreignId('id_servicio')->constraint('servicios')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

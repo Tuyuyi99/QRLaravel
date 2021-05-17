@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Servicio;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ServicioController extends Controller
 {
@@ -121,6 +122,7 @@ class ServicioController extends Controller
     public function destroy($id)
     {
         $servicio = Servicio::find($id);
+        DB::table('qrs')->where('id_servicio', '=', $servicio->id)->delete();
 
         $rutaEnlace = "assets/img/qr/" . $servicio->servicio;
         $rutaDocumento = "assets/PDFs/" . $servicio->servicio;

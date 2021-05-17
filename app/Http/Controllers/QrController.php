@@ -69,13 +69,13 @@ class QrController extends Controller
           
           $nombre = $qr->nombre;
 
-          $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre . '/' . '.pdf';
+          $rutaImagen = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre . '/' . '.pdf';
 
-      if(!mkdir($ruta, 0777, true)) {
+      if(!mkdir($rutaImagen, 0777, true)) {
         die('Fallo al crear las carpetas.');
     }
 
-          $ruta = public_path("assets\PDFs\\" . $servicios->servicio . '\\' . $nombre . '.pdf');
+          $ruta = "\\\\10.8.3.227\\c$\\prueba\\" . $qr->nombre . '.pdf';
           copy($file, $ruta);
 
           $qr->documento = $ruta;
@@ -138,14 +138,12 @@ class QrController extends Controller
       $servicios = DB::table('servicios')->where('id', $qr->id_servicio)->first();
 
       $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre;
-      $rutaDocumento = "assets/PDFs/" . $servicios->servicio . '/' . $qr->nombre . '/' . $qr->nombre;
-      $rutaAEliminar = "assets/PDFs/" . $servicios->servicio . '/' . $qr->nombre;
+      $documentoAEliminar = "assets/PDFs/" . $servicios->servicio . '/' . $qr->nombre . '.pdf';
       $file = new Filesystem;
       $file->cleanDirectory($ruta);
-      $file->cleanDirectory($rutaDocumento);
+      $file->delete($documentoAEliminar);
       
-      rmdir($ruta); 
-      rmdir($rutaAEliminar);
+      rmdir($ruta);
 
       $qr->delete();
       
