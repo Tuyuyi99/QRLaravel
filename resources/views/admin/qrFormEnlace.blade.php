@@ -10,7 +10,7 @@
             <input type="text" name="nombre" value="{{ $qr->nombre }}">
 
             <span>Enlace</span>
-            <input type="text" name="enlace" value="{{ $qr->enlace }}">              
+            <input type="text" name="enlace" value="{{ $qr->enlace }}">
 
 
         Servicio: <select name="id_servicio">
@@ -36,7 +36,7 @@
             <input type="text" name="nombre">
                  
                 <span>Enlace</span>
-                <input type="text" name="enlace">               
+                <input type="text" name="enlace">
 
             Servicio: <select name="id_servicio">
                 @if (isset($serviciosList))
@@ -51,5 +51,5 @@
         @endisset
         @csrf
         <input type="submit" value="Crear">
-    </form>    
+    </form>
 @endsection

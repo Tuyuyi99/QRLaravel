@@ -69,13 +69,14 @@ class QrController extends Controller
           
           $nombre = $qr->nombre;
 
-          $rutaImagen = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre . '/' . '.pdf';
+          $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre . '/' ;
 
-      if(!mkdir($rutaImagen, 0777, true)) {
+      if(!mkdir($ruta, 0777, true)) {
         die('Fallo al crear las carpetas.');
     }
-
-          $ruta = "\\\\10.8.3.227\\c$\\prueba\\" . $qr->nombre . '.pdf';
+    
+          $ruta = "\\\\10.8.3.227\\c$\\prueba\\" . $servicios->servicio . '\\' . $nombre . '.pdf';
+          
           copy($file, $ruta);
 
           $qr->documento = $ruta;
