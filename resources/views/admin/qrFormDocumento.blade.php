@@ -8,8 +8,8 @@
             <span>Nombre:</span>
             <input type="text" name="nombre">
 
-            <span>Subir documento (Sólo PDFs):</span>
-            <input type="file" name="documento">
+            <span>Subir documento:</span>
+            <input type="file" name="documento[]" multiple>
 
                 Servicio: <select name="id_servicio">
                 @if (isset($serviciosList))

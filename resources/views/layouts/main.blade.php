@@ -5,18 +5,11 @@
         <script src="https://kit.fontawesome.com/2c6ef1311b.js" crossorigin="anonymous"></script>
         <link rel="icon" type="image/png" href={{ url('assets/img/favicon.png') }}>
         <link rel="stylesheet" href="{{ url('assets/css/styles.css') }}">
-    </head>
-    <body>
+        
         <script src="{{ url('assets/js/jquery-3.6.0.min.js') }}"></script>
         <script src="{{ url('assets/js/app.js') }}"></script>
-    <div class="padreMenu">
-        <div class="menu">
-            <ul >
-                <li><a href="{{ route('servicio.index') }}">Listado Servicios</a></li>
-                <li><a href="{{ route('qr.index') }}">Listado QRs</a></li>
-            </ul>
-        </div>
-    </div>
+    </head>
+    <body>
         <div>@yield("content")</div>
     </body>
 </html>

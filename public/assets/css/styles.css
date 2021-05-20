@@ -22,7 +22,7 @@
 
 
 .button {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50; 
     border: none;
     color: white;
     padding: 16px 32px;
@@ -107,11 +107,59 @@ li a:hover {
   background-color: #555;
   color: white;
 }
-.center {
-  margin-left: 44.3%;
-  text-align: center;
-  padding: 10px;
+
+.padreMenu{
+    margin: 1rem;
+    padding: 1rem;
+    /* IMPORTANTE */
+    text-align: center;
 }
-.oculto{
-	display: none;
+
+.menu{
+  width: 200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+
+.center{
+  padding: 70px 0px;
+  text-align: center;
+}
+
+.borde{
+  border: none; 
+  border-bottom: solid 1px;
+}
+.atributo{
+  display:none;
+}
+  
+@media print{
+  .saltopagina{
+     display:block;
+     page-break-before:always;
+  }
+  hr{
+    display: none;
+  }
+
+  .shortlink{
+    display: none;
+  }
+  .imprimir{
+    display: none;
+  }
+  .servicio{
+    margin-bottom: 25px;
+    color: rgb(98, 161, 55);
+  }
+  .borde{
+    display: none;
+  }
+  .atributo{
+    display: block;
+    color: rgb(98, 161, 55);
+  }
 }

@@ -20,6 +20,7 @@ Route::get('admin', 'App\Http\Controllers\ServicioController@index')->name('main
 //CRUD de QRs
 
 Route::get('admin/qr', 'App\Http\Controllers\QrController@index')->name('qr.index');
+Route::get('front', 'App\Http\Controllers\MainController@index')->name('main');
 Route::get('admin/qrFormDocumento', 'App\Http\Controllers\QrController@createDocumento')->name('qr.createDocumento');
 Route::get('admin/qrFormEnlace', 'App\Http\Controllers\QrController@createEnlace')->name('qr.createEnlace');
 Route::post('admin/subirDocumento/qr', '\App\Http\Controllers\QrController@subirDocumento')->name('qr.subirDocumento');

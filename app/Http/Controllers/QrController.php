@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class QrController extends Controller
 {
@@ -59,34 +60,26 @@ class QrController extends Controller
 
     public function subirDocumento(Request $request){
       $servicios = Servicio::find($request->id_servicio);
-      $qr = new Qr();
-      $qr->nombre = $request->nombre;
-      $qr->codigo = Str::random(6);
-      $qr->id_servicio = $request->id_servicio;  
+      
+      foreach ($request->documento as $file) {
+          $qr = new Qr();
+          $qr->nombre = $request->nombre;
+          $qr->codigo = Str::random(6);
+          $qr->id_servicio = $request->id_servicio;
 
-      if($request->hasFile("documento")){
-          $file = $request->file("documento");
+          $now = date('Y-m-d H-i-s');
+
+          $nombre = Carbon::createFromFormat('Y-m-d H-i-s', $now, 'Europe/Paris')->addHours(2)->format('Y-m-d H-i-s') . ' - ';
+
+          $nombre = $nombre . $file->getClientOriginalName();
           
-          $nombre = $qr->nombre;
 
-          $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre . '/' ;
+          $file->move(public_path('assets/documentos/' . $servicios->servicio . '/'), $nombre);
 
-      if(!mkdir($ruta, 0777, true)) {
-        die('Fallo al crear las carpetas.');
-    }
-    
-          $ruta = "\\\\10.8.3.227\\c$\\prueba\\" . $servicios->servicio . '\\' . $nombre . '.pdf';
-          
-          copy($file, $ruta);
-
-          $qr->documento = $ruta;
-
-          QrCode::size(500)
-          ->generate(route('acortar.linkDocumento', $qr->codigo), public_path('assets/img/qr/' . $servicios->servicio . '/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
-
+          $qr->documento = $nombre;
+                
+          $qr->save();
       }
-
-      $qr->save();
 
       return redirect()->route('qr.index');
   }
@@ -139,12 +132,15 @@ class QrController extends Controller
       $servicios = DB::table('servicios')->where('id', $qr->id_servicio)->first();
 
       $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre;
-      $documentoAEliminar = "assets/PDFs/" . $servicios->servicio . '/' . $qr->nombre . '.pdf';
+      $documentoAEliminar = public_path("assets/documentos/" . $servicios->servicio . '/' . $qr->documento);
       $file = new Filesystem;
-      $file->cleanDirectory($ruta);
+
       $file->delete($documentoAEliminar);
       
-      rmdir($ruta);
+      if ($qr->enlace != NULL) {
+        $file->cleanDirectory($ruta);
+        rmdir($ruta);
+      }
 
       $qr->delete();
       
