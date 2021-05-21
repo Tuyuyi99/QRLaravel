@@ -20,7 +20,7 @@ class QrController extends Controller
       $serviciosListQr = Servicio::All();
       $data['qrList'] = $qrList;
       $data['serviciosListQr'] = $serviciosListQr;
-
+      
       return view('admin/index', $data);
     }
 
@@ -145,6 +145,23 @@ class QrController extends Controller
       $qr->delete();
       
       return redirect()->route('qr.index');
+    }
+
+    public function buscador(Request $request){
+
+
+       $servicios = Servicio::with('qr')->get();
+       $nombres = Qr::where("nombre",'like',$request->texto."%")->take(10)->get();
+
+      return view("admin/qrBuscador", compact('servicios', 'nombres'));        
+    }
+
+    public function filtrarServicio($id) {
+      $servicio = Servicio::find($id);
+      $qrList = Qr::where('id_servicio', '=', $servicio->id)->get();
+      $data['qrList'] = $qrList;
+
+      return view('admin/index', $data);
     }
 
     public function acortarLinkEnlace($codigo)

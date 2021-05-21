@@ -29,20 +29,31 @@
 
   @if (isset($qrList))
   <a class="button addbutton" href="{{ route('qr.createDocumento') }}">Nuevo QR (Subir Documento) <i class="fas fa-plus-circle"></i></i></a>
-  <a class="button addbutton" href="{{ route('qr.createEnlace') }}">Nuevo QR (Enlace) <i class="fas fa-plus-circle"></i></i></a>
+  <a class="button addbutton" href="{{ route('qr.createEnlace') }}">Nuevo QR (Enlace) <i class="fas fa-plus-circle"></i></i></a> <br>
+
+  <input type="text" id="texto" name="texto" placeholder="Buscador"> <br>
+    <b id="resultados">
+    </b> <br>
+
+    {{-- Filtrar por Servicio: 
+    <select name="id_servicio">
+      @if (isset($serviciosListQr))
+          @foreach ($serviciosListQr as $servicio)
+            @if ($servicio->id == $qrList)
+              <option>{{ $servicio->servicio }}</option>
+            @endif
+          @endforeach
+      @endif
+  </select> --}}
+
     @foreach ($qrList as $qr)
       <form action="{{ route('qr.update', ['id' => $qr->id]) }}" method="POST">
         @method("PATCH")
         @csrf
-
-        ¿Imprimir?
-        <input type="radio" class="with-gap" name="opcion" value="si">  <label for="opcion">Sí</label>
-        <input type="radio" class="with-gap" name="opcion" value="no" checked>  <label for="opcion">No</label>
-        
-        <h3>Nombre: <input id="nombre" size="40" type="text" name="nombre" value="{{ $qr->nombre }}"
+        <h3>Nombre: <input size="40" type="text" name="nombre" value="{{ $qr->nombre }}"
         style="border:none; border-bottom:solid 1px;"></h3>
         @if ($qr->enlace == NULL)
-          <h3>Enlace: <input disabled type="text" name="enlace"
+          <h3>Documento: <input disabled type="text" name="enlace"
             value="{{ $qr->documento }}" size="150" style="border:none; border-bottom:solid 1px;"></h3>
         @else
           <h3>Enlace: <input type="text" name="enlace"
@@ -70,7 +81,7 @@
         <div class="qr">{{ QrCode::size(500)      
         ->generate(route('acortar.linkDocumento', $qr->codigo)) }} </div>
 
-        <a class="button shortlink" href="{{ route('acortar.linkDocumento', $qr->codigo) }}" target="_blank"> <i class="fa fa-link"></i>
+        <a class="button shortlink" href="\\127.0.0.1:8000\Users\CuestaPablo85W\Desktop\laravel-qr-code\public\assets\documentos\Farmacia\2021-05-21 11-29-55 - Cuaderno de prácticas Pablo De La Cuesta Espinosa plantilla.pdf" target="_blank"> <i class="fa fa-link"></i>
         {{ route('acortar.linkDocumento', $qr->codigo) }} </a> <br>
       @else
         <button class ="button modifybutton" type="submit">Modificar <i class="far fa-save"></i></button>
