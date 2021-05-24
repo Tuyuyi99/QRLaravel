@@ -9,7 +9,7 @@
             <input type="text" name="nombre">
 
             <span>Subir documento:</span>
-            <input type="file" name="documento[]" multiple>
+            <input type="file" name="documento[]">
 
                 Servicio: <select name="id_servicio">
                 @if (isset($serviciosList))

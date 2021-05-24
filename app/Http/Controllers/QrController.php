@@ -66,11 +66,8 @@ class QrController extends Controller
           $qr->id_servicio = $request->id_servicio;
 
           $now = date('Y-m-d H-i-s');
-
-          $nombre = Carbon::createFromFormat('Y-m-d H-i-s', $now, 'Europe/Paris')->addHours(2)->format('Y-m-d H-i-s') . ' - ';
-
+          $nombre = Carbon::createFromFormat('Y-m-d H-i-s', $now, 'Europe/Paris')->format('d-m-Y H-i-s') . ' - ';
           $nombre = $nombre . $file->getClientOriginalName();
-          
 
           $file->move(public_path('assets/documentos/' . $servicios->servicio . '/'), $nombre);
 
