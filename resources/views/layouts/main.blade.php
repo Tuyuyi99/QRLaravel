@@ -10,6 +10,9 @@
         <script src="{{ url('assets/js/app.js') }}"></script>
     </head>
     <body>
-        <div>@yield("content")</div>
+        <div>
+            @yield("content")
+        </div>
+
     </body>
 </html>

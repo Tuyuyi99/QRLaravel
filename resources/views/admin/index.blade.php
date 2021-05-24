@@ -13,6 +13,9 @@
           <h3>Nombre del servicio: <input id="servicio" size="40" type="text" name="servicio" value="{{ $servicio->servicio }}"
           style="border:none; border-bottom:solid 1px;"></h3>
 
+          <h3 style="display: inline;"> Fecha y hora de creación: </h3>
+          {{ $servicio->created_at }}<br>
+
           <button class ="button modifybutton" type="submit">Modificar <i class="far fa-save"></i></button>
 
           <a class="button editbutton" href="{{ route('servicio.edit', $servicio->id) }}">Editar <i class="fa fa-edit"></i></a>
@@ -32,19 +35,25 @@
   <a class="button addbutton" href="{{ route('qr.createEnlace') }}">Nuevo QR (Enlace) <i class="fas fa-plus-circle"></i></i></a> <br>
 
   <input type="text" id="texto" name="texto" placeholder="Buscador"> <br>
-    <b id="resultados">
-    </b> <br>
+ <br>
 
-    {{-- Filtrar por Servicio: 
-    <select name="id_servicio">
-      @if (isset($serviciosListQr))
-          @foreach ($serviciosListQr as $servicio)
-            @if ($servicio->id == $qrList)
-              <option>{{ $servicio->servicio }}</option>
-            @endif
-          @endforeach
-      @endif
-  </select> --}}
+    <form action="{{ route('qr.filtrar') }}">
+
+    <select name="idServicio">
+      @foreach ($serviciosListQr as $servicio)     
+        <option value="{{ $servicio->id }}">{{ $servicio->servicio }}</option>
+      @endforeach
+    </select>
+
+    <input type="submit" value="Filtrar">
+
+  </form>
+
+    <p id="resultados">
+      {{-- Me traigo los resultados desde la vista qrBuscador --}}
+    </p>
+
+    <div id="ocultarEnBusqueda">
 
     @foreach ($qrList as $qr)
       <form action="{{ route('qr.update', ['id' => $qr->id]) }}" method="POST">
@@ -52,6 +61,12 @@
         @csrf
         <h3>Nombre: <input size="40" type="text" name="nombre" value="{{ $qr->nombre }}"
         style="border:none; border-bottom:solid 1px;"></h3>
+
+        <h3 style="display: inline;"> Fecha y hora de creación: </h3>
+        {{ $qr->created_at }}
+
+
+        
         @if ($qr->enlace == NULL)
           <h3>Documento: <input disabled type="text" name="enlace"
             value="{{ $qr->documento }}" size="150" style="border:none; border-bottom:solid 1px;"></h3>
@@ -105,7 +120,10 @@
         <button class="button deletebutton" onclick="return confirm('¿Seguro que quieres eliminarlo?')" type="submit">Borrar <i class="fa fa-trash-alt"></i></button>
         <hr style="border:1px solid black;">
       </form>
-      @endforeach
+    @endforeach
+    </div>
   @endif
+  <br>
+  <img src="{{ url("assets/img/sas.png") }}" alt="Logo del SAS">
 </div>
 @endsection

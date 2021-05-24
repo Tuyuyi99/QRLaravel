@@ -31,7 +31,7 @@ Route::get('admin/edit/qr/{id}', 'App\Http\Controllers\QrController@edit')->name
 Route::get('Pdf/{codigo}', '\App\Http\Controllers\QrController@acortarLinkDocumento')->name('acortar.linkDocumento');
 Route::get('{codigo}', '\App\Http\Controllers\QrController@acortarLinkEnlace')->name('acortar.linkEnlace');
 Route::get('admin/qr/buscador','\App\Http\Controllers\QrController@buscador')->name('qr.buscador');
-Route::get('admin/qr/servicio/{servicio}','\App\Http\Controllers\QrController@filtrarServicio')->name('qr.filtrarServicio');
+Route::get('admin/qr/buscador/filtrar','\App\Http\Controllers\QrController@filtrarServicio')->name('qr.filtrar');
 
 
 //CRUD de Servicios

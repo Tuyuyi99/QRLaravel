@@ -12,9 +12,5 @@ class Qr extends Model
     public function servicio(){
         return $this->belongsTo(Servicio::class);
     }
-
-    public function documento()
-    {
-        return $this->hasMany(Documento::class, 'id_documento');
-    }
+    
 }

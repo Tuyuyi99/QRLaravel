@@ -16,7 +16,7 @@ class QrController extends Controller
 {
     public function index()
     {
-      $qrList = Qr::All();
+      $qrList = Qr::All()->sortByDesc('created_at');
       $serviciosListQr = Servicio::All();
       $data['qrList'] = $qrList;
       $data['serviciosListQr'] = $serviciosListQr;
@@ -42,8 +42,6 @@ class QrController extends Controller
       $qr->codigo = Str::random(6);    
       $qr->enlace = $request->enlace;
       $qr->id_servicio = $request->id_servicio;
-
-
       $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre;
 
       if(!mkdir($ruta, 0777, true)) {
@@ -148,20 +146,18 @@ class QrController extends Controller
     }
 
     public function buscador(Request $request){
-
-
        $servicios = Servicio::with('qr')->get();
-       $nombres = Qr::where("nombre",'like',$request->texto."%")->take(10)->get();
+       $nombres = Qr::where("nombre",'like',"%" . $request->texto."%")->orderByDesc('created_at')->get();
 
       return view("admin/qrBuscador", compact('servicios', 'nombres'));        
     }
 
-    public function filtrarServicio($id) {
-      $servicio = Servicio::find($id);
-      $qrList = Qr::where('id_servicio', '=', $servicio->id)->get();
-      $data['qrList'] = $qrList;
+    public function filtrarServicio(request $request) {
 
-      return view('admin/index', $data);
+      $servicios = Servicio::with('qr')->get();
+      $idServicios = Qr::where("id_servicio", "=", $request->idServicio)->orderByDesc('created_at')->get();
+
+      return view('admin/filtrarIndex', compact('servicios', 'idServicios'));
     }
 
     public function acortarLinkEnlace($codigo)

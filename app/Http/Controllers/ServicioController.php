@@ -17,7 +17,7 @@ class ServicioController extends Controller
      */
     public function index()
     {
-        $serviciosList = Servicio::All();
+        $serviciosList = Servicio::All()->sortByDesc('created_at');
         $data['serviciosList'] = $serviciosList;
   
         return view('admin/index', $data);
@@ -44,14 +44,8 @@ class ServicioController extends Controller
         $servicio = new Servicio();
         $servicio->servicio = $request->servicio;
 
-        $rutaEnlace = "assets/img/qr/" . $servicio->servicio;
-        $rutaPDF = "assets/PDFs/" . $servicio->servicio;
-
-      if(!mkdir($rutaEnlace, 0777, true)) {
-        die('Fallo al crear las carpetas.');
-      }
-
-      if(!mkdir($rutaPDF, 0777, true)) {
+        $ruta = "assets/img/qr/" . $servicio->servicio;
+      if(!mkdir($ruta, 0777, true)) {
         die('Fallo al crear las carpetas.');
       }
 
@@ -99,14 +93,9 @@ class ServicioController extends Controller
         $nombreNuevo = $servicio->servicio;
 
         $rutaEnlace = "assets/img/qr/";
-        $rutaDocumento = "assets/PDFs/";
       
       if($nombreAntiguo != $servicio->servicio){
         rename($rutaEnlace . $nombreAntiguo, $rutaEnlace . $nombreNuevo);
-    }
-
-    if($nombreAntiguo != $servicio->servicio){
-        rename($rutaDocumento . $nombreAntiguo, $rutaDocumento . $nombreNuevo);
     }
 
         $servicio->save();
@@ -124,14 +113,11 @@ class ServicioController extends Controller
         $servicio = Servicio::find($id);
         DB::table('qrs')->where('id_servicio', '=', $servicio->id)->delete();
 
-        $rutaEnlace = "assets/img/qr/" . $servicio->servicio;
-        $rutaDocumento = "assets/PDFs/" . $servicio->servicio;
+        $ruta = "assets/img/qr/" . $servicio->servicio;
         $file = new Filesystem;
-        $file->cleanDirectory($rutaEnlace);
-        $file->cleanDirectory($rutaDocumento);
+        $file->cleanDirectory($ruta);
         
-        rmdir($rutaEnlace);
-        rmdir($rutaDocumento);
+        rmdir($ruta);
   
         $servicio->delete();
         return redirect()->route('servicio.index');

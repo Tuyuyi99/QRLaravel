@@ -11,6 +11,8 @@ class Servicio extends Model
 
     public function qr()
     {
-        return $this->hasMany(Qr::class, 'id_servicio');
+        return $this->hasMany(Qr::class, 'id_servicio')->orderBy('created_at');
     }
+
+    
 }
