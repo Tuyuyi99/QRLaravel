@@ -42,16 +42,18 @@
 
   <br>
   <br>
-
+<div>
     <form action="{{ route('qr.filtrar') }}">
-
     <select name="idServicio">
       @foreach ($serviciosListQr as $servicio)     
         <option value="{{ $servicio->id }}">{{ $servicio->servicio }}</option>
       @endforeach
-    </select>
+      <input class="button selectButton" type="submit" value="Filtrar">
+    </select> <br>
+  </div>
 
-    <input type="submit" value="Filtrar">
+
+
 
   </form>
 

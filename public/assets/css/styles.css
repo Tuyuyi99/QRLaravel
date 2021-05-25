@@ -1,3 +1,33 @@
+select::-ms-expand {
+  display: none;
+}
+
+select {
+  width: 8%; 
+  font-size: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 0;
+  background-color: #a0e0fa;
+  border: none;
+  border-bottom: 2px solid #a0e0fa;
+  color: black;
+  padding: 10px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 10px;
+  border-radius: 50px;
+}
+
+select:hover, select:focus {
+  color: black;
+  background-color: white;
+  border-bottom-color: #DCDCDC;
+  outline: none;
+  box-shadow: none;
+}
+
 .shortlink {
   background-color: red;
   color: white;
@@ -22,10 +52,9 @@
 
 
 .button {
-    background-color: #4CAF50; 
     border: none;
     color: white;
-    padding: 16px 32px;
+    padding: 10px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -33,7 +62,7 @@
     margin: 15px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 15px;
   }
 
 .editbutton {
@@ -85,6 +114,19 @@
 .addbutton:hover {
   background-color: #4CAF50;
   color: white;
+  font-weight: bold;
+}
+
+.selectButton {
+  background-color: #008CBA;
+  color: white; 
+  border: 1px solid #008CBA;
+  font-weight: bold;
+}
+
+.selectButton:hover {
+  background-color: white;
+  color: black;
   font-weight: bold;
 }
 
@@ -154,7 +196,6 @@ li a:hover {
 
 .buscadorInput{
   border:none
-  
 }
 
 .buscadorInput:focus{
@@ -176,6 +217,7 @@ li a:hover {
   width: 475px;
   align-self: center;
 }
+
   
 @media print{
   .saltopagina{
