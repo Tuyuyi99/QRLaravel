@@ -15,7 +15,13 @@ use Illuminate\Support\Facades\Storage;
 |
 */
 
-Route::get('admin', 'App\Http\Controllers\ServicioController@index')->name('main');
+//Vista del cliente
+
+Route::get('/', 'App\Http\Controllers\MainController@index')->name('main');
+
+//Redirigir desde /admin
+
+Route::redirect('admin', 'admin/qr');
 
 //CRUD de QRs
 
@@ -28,7 +34,7 @@ Route::post('admin/storeEnlace/qr', '\App\Http\Controllers\QrController@store')-
 Route::patch('admin/update/qr/{id}', 'App\Http\Controllers\QrController@update')->name('qr.update');
 Route::delete('admin/destroy/qr/{id}', 'App\Http\Controllers\QrController@destroy')->name('qr.destroy');
 Route::get('admin/edit/qr/{id}', 'App\Http\Controllers\QrController@edit')->name('qr.edit');
-Route::get('Pdf/{codigo}', '\App\Http\Controllers\QrController@acortarLinkDocumento')->name('acortar.linkDocumento');
+Route::get('documento/{codigo}', '\App\Http\Controllers\QrController@acortarLinkDocumento')->name('acortar.linkDocumento');
 Route::get('{codigo}', '\App\Http\Controllers\QrController@acortarLinkEnlace')->name('acortar.linkEnlace');
 Route::get('admin/qr/buscador','\App\Http\Controllers\QrController@buscador')->name('qr.buscador');
 Route::get('admin/qr/buscador/filtrar','\App\Http\Controllers\QrController@filtrarServicio')->name('qr.filtrar');

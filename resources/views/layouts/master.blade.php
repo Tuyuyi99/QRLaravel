@@ -12,8 +12,8 @@
     <div class="padreMenu">
         <div class="menu">
             <ul >
-                <li><a href="{{ route('servicio.index') }}">Listado Servicios</a></li>
-                <li><a href="{{ route('qr.index') }}">Listado QRs</a></li>
+                <li><a style="border: 2px solid #000;" href="{{ route('servicio.index') }}">Listado Servicios</a></li>
+                <li><a style="border: 2px solid #000; border-top: 0;" href="{{ route('qr.index') }}">Listado QRs</a></li>
             </ul>
         </div>
     </div>

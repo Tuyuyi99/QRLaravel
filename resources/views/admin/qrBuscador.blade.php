@@ -11,10 +11,18 @@
                 <b>Nombre: </b> {{$nombre->nombre}} <br>
                 <b> Fecha y hora de creación: </b> {{ $nombre->created_at }}<br>
                 <b>Servicio: </b> {{ $item->servicio }} <br>
-                <b>Código QR: </b> {{ QrCode::size(200)      
-                ->generate(route('acortar.linkDocumento', $nombre->codigo)) }}
+                @if ($nombre->enlace == NULL)
+                    <b>Documento: </b> {{ $nombre->documento }}<br>
+                    <b>Código QR: </b> {{ QrCode::size(200)      
+                    ->generate(route('acortar.linkDocumento', $nombre->codigo)) }}
+                @else
+                    <b>Enlace: </b> {{ $nombre->enlace }}<br>
+                    <b>Código QR: </b> {{ QrCode::size(200)      
+                        ->generate(route('acortar.linkEnlace', $nombre->codigo)) }}
+                @endif
                 <hr class="separador">
             @endif
         @endforeach
     @endforeach
   @endif
+

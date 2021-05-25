@@ -34,8 +34,14 @@
   <a class="button addbutton" href="{{ route('qr.createDocumento') }}">Nuevo QR (Subir Documento) <i class="fas fa-plus-circle"></i></i></a>
   <a class="button addbutton" href="{{ route('qr.createEnlace') }}">Nuevo QR (Enlace) <i class="fas fa-plus-circle"></i></i></a> <br>
 
-  <input type="text" id="texto" name="texto" placeholder="Buscador"> <br>
- <br>
+
+  <div class="buscador divBuscador">
+    <label><i class="fa fa-search" style="margin-right: 3px"></i></label>
+    <input type="text" class="buscadorInput" id="texto" size="60" name="texto" placeholder="Escribe lo que buscas">  
+  </div>
+
+  <br>
+  <br>
 
     <form action="{{ route('qr.filtrar') }}">
 
@@ -96,7 +102,7 @@
         <div class="qr">{{ QrCode::size(500)      
         ->generate(route('acortar.linkDocumento', $qr->codigo)) }} </div>
 
-        <a class="button shortlink" href="\\127.0.0.1:8000\Users\CuestaPablo85W\Desktop\laravel-qr-code\public\assets\documentos\Farmacia\2021-05-21 11-29-55 - Cuaderno de prácticas Pablo De La Cuesta Espinosa plantilla.pdf" target="_blank"> <i class="fa fa-link"></i>
+        <a class="button shortlink" href="{{ route('acortar.linkDocumento', $qr->codigo) }}" target="_blank"> <i class="fa fa-link"></i>
         {{ route('acortar.linkDocumento', $qr->codigo) }} </a> <br>
       @else
         <button class ="button modifybutton" type="submit">Modificar <i class="far fa-save"></i></button>

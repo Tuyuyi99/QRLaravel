@@ -145,6 +145,37 @@ li a:hover {
 	border: 0;
 	box-shadow: 0 10px 10px -10px #8c8b8b inset;
 }
+
+.buscador{
+  border: 2px solid rgb(0, 0, 0);
+  padding: 10px;
+  border-radius: 25px;
+}
+
+.buscadorInput{
+  border:none
+  
+}
+
+.buscadorInput:focus{
+  outline: none;
+  box-shadow: none;
+  
+}
+
+.buscador:focus{
+  outline: none;
+  box-shadow: none;
+}
+
+.divBuscador{
+  display: flex;
+  margin-left: 37%;
+  align-items: center;
+  justify-content: center;
+  width: 475px;
+  align-self: center;
+}
   
 @media print{
   .saltopagina{

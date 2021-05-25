@@ -160,16 +160,18 @@ class QrController extends Controller
     public function acortarLinkEnlace($codigo)
     {
 
-        $find = Qr::where('codigo', $codigo)->first();
+        $qr = Qr::where('codigo', $codigo)->first();
 
-        return redirect($find->enlace);
+        return redirect($qr->enlace);
     }
 
     public function acortarLinkDocumento($codigo)
     {
-        $find = Qr::where('codigo', $codigo)->first();
+        $qr = Qr::where('codigo', $codigo)->first();
 
-        return redirect($find->documento);
+        $nombreServicio = DB::table('servicios')->where('id', $qr->id_servicio)->value('servicio');
+
+        return redirect('assets/documentos/' . $nombreServicio . '/' . $qr->documento);
     }
 
 }
