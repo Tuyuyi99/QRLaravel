@@ -4,10 +4,34 @@
 
 <div class="container center">
 
+  <div class="buscador divBuscador">
+    <label><i class="fa fa-search" style="margin-right: 3px"></i></label>
+    <input type="text" class="buscadorInput" id="texto" size="60" name="texto" placeholder="Escribe lo que buscas">  
+  </div>
+
+  <div>
+    <form action="{{ route('qr.filtrar') }}">
+      <select name="idServicio">
+      @foreach ($serviciosListQr as $servicio)     
+        <option value="{{ $servicio->id }}">{{ $servicio->servicio }}</option>
+      @endforeach
+      <input class="button selectButton" type="submit" value="Filtrar por servicio">
+      </select> <br>
+    </form>
+  </div>
+
+  <p id="resultados">
+    {{-- Me traigo los resultados desde la vista qrBuscador --}}
+  </p>
+
+  <div id="ocultarEnBusqueda">
+
   @if (isset($qrList))
     @foreach ($qrList as $qr)
     <div class="saltopagina">
         <h3> Nombre: <span class="atributo">{{ $qr->nombre }}</span><input disabled type="text" size="40" name="nombre" value="{{ $qr->nombre }}" class="borde"></h3>
+        <h3 style="display: inline;"> Fecha y hora de creación: </h3>
+        {{ $qr->created_at }}<br>
         @if ($qr->enlace == NULL)
           <h3> Documento: <span class="atributo">{{ $qr->documento }} </span> <input disabled name="enlace" type="text" value="{{ $qr->documento }}" size="150" class="borde"></h3>
         @else
@@ -42,10 +66,13 @@
 
         <a class="button shortlink" href="{{ route('acortar.linkEnlace', $qr->codigo) }}" target="_blank"> <i class="fa fa-link"></i>
         {{ route('acortar.linkEnlace', $qr->codigo) }} </a> <br>
-        <hr class="borde">
       @endif
-            </div>
+      <hr style="border:1px solid black;">
+      </div>
       @endforeach
+    </div>
   @endif
+  <br>
+  <img src="{{ url("assets/img/sas.png") }}" alt="Logo del SAS">
 </div>
 @endsection

@@ -29,16 +29,19 @@ select:hover, select:focus {
 }
 
 .shortlink {
-  background-color: red;
+  background-color: rgb(59, 177, 46);
   color: white;
   padding: 5px 5px;
   text-decoration: none;
   text-transform: uppercase;
   top: 5px;
+  font-weight: bold;
 }
 
 .shortlink:hover {
-  background-color: #ce0606;
+  background-color: #000000;
+  filter: brightness(1.25);
+  font-weight: bold;
 }
 
 .shortlink:active {

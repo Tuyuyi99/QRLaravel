@@ -42,20 +42,17 @@
 
   <br>
   <br>
-<div>
+
+  <div>
     <form action="{{ route('qr.filtrar') }}">
-    <select name="idServicio">
+      <select name="idServicio">
       @foreach ($serviciosListQr as $servicio)     
         <option value="{{ $servicio->id }}">{{ $servicio->servicio }}</option>
       @endforeach
       <input class="button selectButton" type="submit" value="Filtrar">
-    </select> <br>
+      </select> <br>
+    </form>
   </div>
-
-
-
-
-  </form>
 
     <p id="resultados">
       {{-- Me traigo los resultados desde la vista qrBuscador --}}
@@ -67,8 +64,8 @@
       <form action="{{ route('qr.update', ['id' => $qr->id]) }}" method="POST">
         @method("PATCH")
         @csrf
-        <h3>Nombre: <input size="40" type="text" name="nombre" value="{{ $qr->nombre }}"
-        style="border:none; border-bottom:solid 1px;"></h3>
+          <h3>Nombre: <input size="40" type="text" name="nombre" value="{{ $qr->nombre }}"
+          style="border:none; border-bottom:solid 1px;"></h3>
 
         <h3 style="display: inline;"> Fecha y hora de creación: </h3>
         {{ $qr->created_at }}
@@ -100,8 +97,10 @@
       <button onClick="window.print()">Imprimir</button>
 
       @if ($qr->enlace == NULL)
+
+      <button class ="button modifybutton" type="submit">Modificar <i class="far fa-save"></i></button>
             
-        <div class="qr">{{ QrCode::size(500)      
+        <div class="qr">{{ QrCode::size(200)      
         ->generate(route('acortar.linkDocumento', $qr->codigo)) }} </div>
 
         <a class="button shortlink" href="{{ route('acortar.linkDocumento', $qr->codigo) }}" target="_blank"> <i class="fa fa-link"></i>
@@ -109,17 +108,13 @@
       @else
         <button class ="button modifybutton" type="submit">Modificar <i class="far fa-save"></i></button>
 
-        <div class="qr">{{ QrCode::size(500)      
+        <div class="qr">{{ QrCode::size(200)      
         ->generate(route('acortar.linkEnlace', $qr->codigo)) }} </div>
 
         <a class="button shortlink" href="{{ route('acortar.linkEnlace', $qr->codigo) }}" target="_blank"> <i class="fa fa-link"></i>
         {{ route('acortar.linkEnlace', $qr->codigo) }} </a> <br>
         <a class="button editbutton" href="{{ route('qr.edit', $qr->id) }}">Editar <i class="fa fa-edit"></i></a>
       @endif
-          
-
-     
-          
           
       </form>
       <form action="{{ route('qr.destroy', $qr->id) }}" method="POST">

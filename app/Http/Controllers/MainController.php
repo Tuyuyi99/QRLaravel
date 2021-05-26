@@ -15,7 +15,7 @@ class MainController extends Controller
      */
     public function index()
     {
-      $qrList = Qr::All();
+      $qrList = Qr::All()->sortByDesc('created_at');
       $serviciosListQr = Servicio::All();
       $data['qrList'] = $qrList;
       $data['serviciosListQr'] = $serviciosListQr;

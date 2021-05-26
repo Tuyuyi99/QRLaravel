@@ -102,22 +102,28 @@ class QrController extends Controller
     $nombreNuevo = $qr->nombre;
     $qr->id_servicio = $request->id_servicio;
 
-    $rutaNueva = "assets/img/qr/" . $servicioNuevo->servicio . '/' . $nombreNuevo;
-    $rutaAntigua = "assets/img/qr/" . $servicioAntiguo->servicio . '/' . $nombreAntiguo;
+    if ($qr->enlace != NULL){
 
-    $file = new Filesystem;
-    $file->cleanDirectory($rutaAntigua);
+      $rutaNueva = "assets/img/qr/" . $servicioNuevo->servicio . '/' . $nombreNuevo;
+      $rutaAntigua = "assets/img/qr/" . $servicioAntiguo->servicio . '/' . $nombreAntiguo;
 
-    rmdir($rutaAntigua);
-    
-    if(!mkdir($rutaNueva, 0777, true)) {
-      die('Fallo al crear las carpetas.');
-  }
+      $file = new Filesystem;
+      $file->cleanDirectory($rutaAntigua);
 
-  QrCode::size(500)
-    ->generate(route('acortar.linkEnlace', $qr->codigo), public_path('assets/img/qr/' . $servicioNuevo->servicio . '/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+      rmdir($rutaAntigua);
+        
+      if(!mkdir($rutaNueva, 0777, true)) {
+        die('Fallo al crear las carpetas.');
+      }
+      
 
-    $qr->enlace = $request->enlace;
+      QrCode::size(500)
+      ->generate(route('acortar.linkEnlace', $qr->codigo), public_path('assets/img/qr/' . $servicioNuevo->servicio . '/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+
+      $qr->enlace = $request->enlace;
+    } else{
+      $qr->nombre = $request->nombre;
+    }
     $qr->save();
     return redirect()->route('qr.index');
 }
@@ -144,17 +150,18 @@ class QrController extends Controller
 
     public function buscador(Request $request){
        $servicios = Servicio::with('qr')->get();
-       $nombres = Qr::where("nombre",'like',"%" . $request->texto."%")->orderByDesc('created_at')->get();
+       $qrs = Qr::where("nombre",'like',"%" . $request->texto."%")->orderByDesc('created_at')->get();
 
-      return view("admin/qrBuscador", compact('servicios', 'nombres'));        
+
+      return view("admin/qrBuscador", compact('servicios', 'qrs'));        
     }
 
     public function filtrarServicio(request $request) {
 
       $servicios = Servicio::with('qr')->get();
-      $idServicios = Qr::where("id_servicio", "=", $request->idServicio)->orderByDesc('created_at')->get();
+      $qrs = Qr::where("id_servicio", "=", $request->idServicio)->orderByDesc('created_at')->get();
 
-      return view('admin/filtrarIndex', compact('servicios', 'idServicios'));
+      return view('admin/filtrarIndex', compact('servicios', 'qrs'));
     }
 
     public function acortarLinkEnlace($codigo)

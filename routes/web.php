@@ -19,14 +19,14 @@ use Illuminate\Support\Facades\Storage;
 
 Route::get('/', 'App\Http\Controllers\MainController@index')->name('main');
 
-//Redirigir desde /admin
+//Redirigir desde una vista a otra
 
 Route::redirect('admin', 'admin/qr');
+Route::redirect('buscador', '/');
 
 //CRUD de QRs
 
 Route::get('admin/qr', 'App\Http\Controllers\QrController@index')->name('qr.index');
-Route::get('front', 'App\Http\Controllers\MainController@index')->name('main');
 Route::get('admin/qrFormDocumento', 'App\Http\Controllers\QrController@createDocumento')->name('qr.createDocumento');
 Route::get('admin/qrFormEnlace', 'App\Http\Controllers\QrController@createEnlace')->name('qr.createEnlace');
 Route::post('admin/subirDocumento/qr', '\App\Http\Controllers\QrController@subirDocumento')->name('qr.subirDocumento');
@@ -37,7 +37,7 @@ Route::get('admin/edit/qr/{id}', 'App\Http\Controllers\QrController@edit')->name
 Route::get('documento/{codigo}', '\App\Http\Controllers\QrController@acortarLinkDocumento')->name('acortar.linkDocumento');
 Route::get('{codigo}', '\App\Http\Controllers\QrController@acortarLinkEnlace')->name('acortar.linkEnlace');
 Route::get('admin/qr/buscador','\App\Http\Controllers\QrController@buscador')->name('qr.buscador');
-Route::get('admin/qr/buscador/filtrar','\App\Http\Controllers\QrController@filtrarServicio')->name('qr.filtrar');
+Route::get('buscador/filtrar','\App\Http\Controllers\QrController@filtrarServicio')->name('qr.filtrar');
 
 
 //CRUD de Servicios
