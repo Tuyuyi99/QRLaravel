@@ -44,8 +44,12 @@ class ServicioController extends Controller
         $servicio = new Servicio();
         $servicio->servicio = $request->servicio;
 
-        $ruta = "assets/img/qr/" . $servicio->servicio;
-      if(!mkdir($ruta, 0777, true)) {
+        $rutaQr = "assets/servicios/" . $servicio->servicio . '/qr';
+        $rutaDocumentos = "assets/servicios/" . $servicio->servicio . '/documentos';
+      if(!mkdir($rutaQr, 0777, true)) {
+        die('Fallo al crear las carpetas.');
+      }
+      if(!mkdir($rutaDocumentos, 0777, true)) {
         die('Fallo al crear las carpetas.');
       }
 
@@ -113,11 +117,18 @@ class ServicioController extends Controller
         $servicio = Servicio::find($id);
         DB::table('qrs')->where('id_servicio', '=', $servicio->id)->delete();
 
-        $ruta = "assets/img/qr/" . $servicio->servicio;
+        $ruta = "assets/servicios/" . $servicio->servicio . '/qr';
+        $rutaDocumentos = "assets/servicios/" . $servicio->servicio . '/documentos/';
+        $carpetaServicios = "assets/servicios/" . $servicio->servicio;
         $file = new Filesystem;
         $file->cleanDirectory($ruta);
+
+        $documentos = $file->allFiles($rutaDocumentos);
+
+        $file->delete($documentos);
         
         rmdir($ruta);
+        rmdir($carpetaServicios);
   
         $servicio->delete();
         return redirect()->route('servicio.index');

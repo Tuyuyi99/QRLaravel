@@ -42,14 +42,14 @@ class QrController extends Controller
       $qr->codigo = Str::random(6);    
       $qr->enlace = $request->enlace;
       $qr->id_servicio = $request->id_servicio;
-      $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre;
+      $ruta = "assets/servicios/" . $servicios->servicio . "/qr/" . $qr->nombre;
 
       if(!mkdir($ruta, 0777, true)) {
         die('Fallo al crear las carpetas.');
     }
 
       QrCode::size(500)
-      ->generate(route('acortar.linkEnlace', $qr->codigo), public_path('assets/img/qr/' . $servicios->servicio . '/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+      ->generate(route('acortar.linkEnlace', $qr->codigo), public_path('assets/servicios/' . $servicios->servicio . '/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
 
       $qr->save();
 
@@ -62,14 +62,14 @@ class QrController extends Controller
       foreach ($request->documento as $file) {
           $qr = new Qr();
           $qr->nombre = $request->nombre;
-          $qr->codigo = Str::random(6);
+          $qr->codigo = Str::random(10);
           $qr->id_servicio = $request->id_servicio;
 
           $now = date('Y-m-d H-i-s');
           $nombre = Carbon::createFromFormat('Y-m-d H-i-s', $now, 'Europe/Paris')->format('d-m-Y H-i-s') . ' - ';
           $nombre = $nombre . $file->getClientOriginalName();
 
-          $file->move(public_path('assets/documentos/' . $servicios->servicio . '/'), $nombre);
+          $file->move(public_path('assets/servicios/' . $servicios->servicio . '/documentos'), $nombre);
 
           $qr->documento = $nombre;
                 

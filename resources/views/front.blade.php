@@ -73,6 +73,5 @@
     </div>
   @endif
   <br>
-  <img src="{{ url("assets/img/sas.png") }}" alt="Logo del SAS">
 </div>
 @endsection
