@@ -31,9 +31,11 @@ Route::get('admin/qrFormDocumento', 'App\Http\Controllers\QrController@createDoc
 Route::get('admin/qrFormEnlace', 'App\Http\Controllers\QrController@createEnlace')->name('qr.createEnlace');
 Route::post('admin/subirDocumento/qr', '\App\Http\Controllers\QrController@subirDocumento')->name('qr.subirDocumento');
 Route::post('admin/storeEnlace/qr', '\App\Http\Controllers\QrController@store')->name('qr.storeEnlace');
-Route::patch('admin/update/qr/{id}', 'App\Http\Controllers\QrController@update')->name('qr.update');
+Route::patch('admin/updateEnlace/qr/{id}', 'App\Http\Controllers\QrController@updateEnlace')->name('qr.updateEnlace');
+Route::patch('admin/updateDocumento/qr/{id}', 'App\Http\Controllers\QrController@updateDocumento')->name('qr.updateDocumento');
 Route::delete('admin/destroy/qr/{id}', 'App\Http\Controllers\QrController@destroy')->name('qr.destroy');
-Route::get('admin/edit/qr/{id}', 'App\Http\Controllers\QrController@edit')->name('qr.edit');
+Route::get('admin/editEnlace/qr/{id}', 'App\Http\Controllers\QrController@editEnlace')->name('qr.editEnlace');
+Route::get('admin/editDocumento/qr/{id}', 'App\Http\Controllers\QrController@editDocumento')->name('qr.editDocumento');
 Route::get('documento/{codigo}', '\App\Http\Controllers\QrController@acortarLinkDocumento')->name('acortar.linkDocumento');
 Route::get('{codigo}', '\App\Http\Controllers\QrController@acortarLinkEnlace')->name('acortar.linkEnlace');
 Route::get('admin/qr/buscador','\App\Http\Controllers\QrController@buscador')->name('qr.buscador');

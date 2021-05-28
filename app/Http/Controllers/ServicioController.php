@@ -128,6 +128,7 @@ class ServicioController extends Controller
         $file->delete($documentos);
         
         rmdir($ruta);
+        rmdir($rutaDocumentos);
         rmdir($carpetaServicios);
   
         $servicio->delete();

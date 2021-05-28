@@ -18,6 +18,7 @@
         </div>
     </div>
         <div>
+            <img style="   position: absolute; top: 0; right: 0;" src="{{ url("assets/img/sas.jpg") }}" alt="Logo del SAS">
             @yield("content")
         </div>
 

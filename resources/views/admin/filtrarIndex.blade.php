@@ -25,6 +25,5 @@
             @endforeach  
         @endforeach
         </div>
-        <img src="{{ url("assets/img/sas.png") }}" alt="Logo del SAS">
     </div>
 @endif

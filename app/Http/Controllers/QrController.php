@@ -69,7 +69,7 @@ class QrController extends Controller
           $nombre = Carbon::createFromFormat('Y-m-d H-i-s', $now, 'Europe/Paris')->format('d-m-Y H-i-s') . ' - ';
           $nombre = $nombre . $file->getClientOriginalName();
 
-          $file->move(public_path('assets/servicios/' . $servicios->servicio . '/documentos'), $nombre);
+          $file->move(public_path('assets/servicios/' . $servicios->servicio . '/documentos/'), $nombre);
 
           $qr->documento = $nombre;
                 
@@ -84,15 +84,22 @@ class QrController extends Controller
       return view("admin/qr");
     }
 
-    public function edit($id){
+    public function editEnlace($id){
       $qr = Qr::find($id);
       $servicios = Servicio::all();
       $data["qr"] = $qr;
       $data["serviciosList"] = $servicios;
       return view('admin/qrFormEnlace', $data);
     }
+    public function editDocumento($id){
+      $qr = Qr::find($id);
+      $servicios = Servicio::all();
+      $data["qr"] = $qr;
+      $data["serviciosList"] = $servicios;
+      return view('admin/qrFormDocumento', $data);
+    }
 
-  public function update(Request $request){
+  public function updateEnlace(Request $request){
     $qr = Qr::find($request->id);
     $servicioAntiguo = DB::table('servicios')->where('id', $qr->id_servicio)->first();
     $servicioNuevo = Servicio::find($request->id_servicio);
@@ -102,38 +109,68 @@ class QrController extends Controller
     $nombreNuevo = $qr->nombre;
     $qr->id_servicio = $request->id_servicio;
 
-    if ($qr->enlace != NULL){
+    $rutaNueva = "assets/servicios/" . $servicioNuevo->servicio . '/qr/' . $nombreNuevo;
+    $rutaAntigua = "assets/servicios/" . $servicioAntiguo->servicio . '/qr/' . $nombreAntiguo;
 
-      $rutaNueva = "assets/img/qr/" . $servicioNuevo->servicio . '/' . $nombreNuevo;
-      $rutaAntigua = "assets/img/qr/" . $servicioAntiguo->servicio . '/' . $nombreAntiguo;
+    $file = new Filesystem;
+    $file->cleanDirectory($rutaAntigua);
 
-      $file = new Filesystem;
-      $file->cleanDirectory($rutaAntigua);
-
-      rmdir($rutaAntigua);
+    rmdir($rutaAntigua);
         
-      if(!mkdir($rutaNueva, 0777, true)) {
-        die('Fallo al crear las carpetas.');
-      }
+    if(!mkdir($rutaNueva, 0777, true)) {
+      die('Fallo al crear las carpetas.');
+    }
       
 
-      QrCode::size(500)
-      ->generate(route('acortar.linkEnlace', $qr->codigo), public_path('assets/img/qr/' . $servicioNuevo->servicio . '/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+    QrCode::size(500)
+    ->generate(route('acortar.linkEnlace', $qr->codigo), public_path('assets/img/qr/' . $servicioNuevo->servicio . '/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
 
-      $qr->enlace = $request->enlace;
-    } else{
-      $qr->nombre = $request->nombre;
-    }
+    $qr->enlace = $request->enlace;
     $qr->save();
     return redirect()->route('qr.index');
+}
+
+public function updateDocumento(Request $request){
+  $qr = Qr::find($request->id);
+  $servicioAntiguo = DB::table('servicios')->where('id', $qr->id_servicio)->first();
+  $servicioNuevo = Servicio::find($request->id_servicio);
+  
+  $documentoAntiguo = $qr->documento;
+
+  foreach ($request->documento as $file) {
+    $qr->nombre = $request->nombre;
+    $qr->id_servicio = $request->id_servicio;
+
+    $now = date('Y-m-d H-i-s');
+    $nombre = Carbon::createFromFormat('Y-m-d H-i-s', $now, 'Europe/Paris')->format('d-m-Y H-i-s') . ' - ';
+    $nombre = $nombre . $file->getClientOriginalName();
+
+    $file->move(public_path('assets/servicios/' . $servicioNuevo->servicio . '/documentos/'), $nombre);
+
+    $qr->documento = $nombre;
+
+    $documentoNuevo = $qr->documento;
+
+    $rutaNueva = "assets/servicios/" . $servicioNuevo->servicio . '/documentos/' . $documentoAntiguo;
+    $rutaAntigua = "assets/servicios/" . $servicioAntiguo->servicio . '/documentos/' . $documentoAntiguo;  
+  
+    $file = new Filesystem;
+    $file->delete($rutaAntigua);    
+}
+
+
+  $qr->documento = $nombre;
+
+  $qr->save();
+  return redirect()->route('qr.index');
 }
 
     public function destroy($id){
       $qr = Qr::find($id);
       $servicios = DB::table('servicios')->where('id', $qr->id_servicio)->first();
 
-      $ruta = "assets/img/qr/" . $servicios->servicio . '/' . $qr->nombre;
-      $documentoAEliminar = public_path("assets/documentos/" . $servicios->servicio . '/' . $qr->documento);
+      $ruta = "assets/servicios/" . $servicios->servicio . '/qr/' . $qr->nombre;
+      $documentoAEliminar = public_path("assets/servicios/" . $servicios->servicio . '/documentos/' . $qr->documento);
       $file = new Filesystem;
 
       $file->delete($documentoAEliminar);
@@ -178,7 +215,9 @@ class QrController extends Controller
 
         $nombreServicio = DB::table('servicios')->where('id', $qr->id_servicio)->value('servicio');
 
-        return redirect('assets/documentos/' . $nombreServicio . '/' . $qr->documento);
+        $ruta = 'assets/servicios/' . $nombreServicio . '/documentos/' . $qr->documento;
+
+        return redirect($ruta);
     }
 
 }

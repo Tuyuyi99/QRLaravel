@@ -61,7 +61,7 @@
     <div id="ocultarEnBusqueda">
 
     @foreach ($qrList as $qr)
-      <form action="{{ route('qr.update', ['id' => $qr->id]) }}" method="POST">
+      <form action="{{ route('qr.updateEnlace', ['id' => $qr->id]) }}" method="POST">
         @method("PATCH")
         @csrf
           <h3>Nombre: <input size="40" type="text" name="nombre" value="{{ $qr->nombre }}"
@@ -94,17 +94,15 @@
               @endforeach
           @endif
       </select>
-      <button onClick="window.print()">Imprimir</button>
 
       @if ($qr->enlace == NULL)
-
-      <button class ="button modifybutton" type="submit">Modificar <i class="far fa-save"></i></button>
             
         <div class="qr">{{ QrCode::size(200)      
         ->generate(route('acortar.linkDocumento', $qr->codigo)) }} </div>
 
         <a class="button shortlink" href="{{ route('acortar.linkDocumento', $qr->codigo) }}" target="_blank"> <i class="fa fa-link"></i>
         {{ route('acortar.linkDocumento', $qr->codigo) }} </a> <br>
+        <a class="button editbutton" href="{{ route('qr.editDocumento', $qr->id) }}">Editar <i class="fa fa-edit"></i></a>
       @else
         <button class ="button modifybutton" type="submit">Modificar <i class="far fa-save"></i></button>
 
@@ -113,7 +111,7 @@
 
         <a class="button shortlink" href="{{ route('acortar.linkEnlace', $qr->codigo) }}" target="_blank"> <i class="fa fa-link"></i>
         {{ route('acortar.linkEnlace', $qr->codigo) }} </a> <br>
-        <a class="button editbutton" href="{{ route('qr.edit', $qr->id) }}">Editar <i class="fa fa-edit"></i></a>
+        <a class="button editbutton" href="{{ route('qr.editEnlace', $qr->id) }}">Editar <i class="fa fa-edit"></i></a>
       @endif
           
       </form>

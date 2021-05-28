@@ -9,6 +9,7 @@
     </head>
     <body>
         <div>
+            <img style="   position: absolute; top: 0; right: 0;" src="{{ url("assets/img/sas.jpg") }}" alt="Logo del SAS">
             @yield("content")
         </div>
         <script src="{{ url('assets/js/jquery-3.6.0.min.js') }}"></script>
