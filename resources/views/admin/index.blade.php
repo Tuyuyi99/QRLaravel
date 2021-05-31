@@ -64,18 +64,20 @@
       <form action="{{ route('qr.updateEnlace', ['id' => $qr->id]) }}" method="POST">
         @method("PATCH")
         @csrf
-          <h3>Nombre: <input size="40" type="text" name="nombre" value="{{ $qr->nombre }}"
-          style="border:none; border-bottom:solid 1px;"></h3>
 
         <h3 style="display: inline;"> Fecha y hora de creación: </h3>
         {{ $qr->created_at }}
-
-
         
         @if ($qr->enlace == NULL)
+          <h3>Nombre: <input disabled size="40" type="text" name="nombre" value="{{ $qr->nombre }}"
+          style="border:none; border-bottom:solid 1px;"></h3>
+
           <h3>Documento: <input disabled type="text" name="enlace"
             value="{{ $qr->documento }}" size="150" style="border:none; border-bottom:solid 1px;"></h3>
         @else
+          <h3>Nombre: <input size="40" type="text" name="nombre" value="{{ $qr->nombre }}"
+          style="border:none; border-bottom:solid 1px;"></h3>
+
           <h3>Enlace: <input type="text" name="enlace"
           value="{{ $qr->enlace }}" size="150" style="border:none; border-bottom:solid 1px;"></h3>
         @endif

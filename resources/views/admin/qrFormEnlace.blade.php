@@ -3,7 +3,7 @@
 @section('content')
 
 @isset($qr)
-    <form action="{{ route('qr.update', ['id' => $qr->id]) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('qr.updateEnlace', ['id' => $qr->id]) }}" method="POST" enctype="multipart/form-data">
         <div style="height: 100px; margin-right: 5px;">
 
             <span>Nombre:</span>
@@ -50,6 +50,6 @@
 
         @endisset
         @csrf
-        <input type="submit" value="Crear">
+        <input type="submit" value="Enviar">
     </form>
 @endsection

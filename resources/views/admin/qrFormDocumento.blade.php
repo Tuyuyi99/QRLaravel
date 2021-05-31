@@ -10,7 +10,7 @@
             <input type="text" name="nombre" value="{{ $qr->nombre }}">
 
             <span>Subir documento:</span>
-            <input type="file" name="documento[]">
+            <input type="file" name="documento[]" value="{{ $qr->documento }}">
 
             Servicio: <select name="id_servicio">
                 @if (isset($serviciosList))
@@ -49,6 +49,6 @@
 
         @endisset
         @csrf
-        <input type="submit" value="Crear">
+        <input type="submit" value="Enviar">
     </form>    
 @endsection

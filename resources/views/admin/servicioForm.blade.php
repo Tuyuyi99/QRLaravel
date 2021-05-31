@@ -19,6 +19,6 @@
         </div>
         @endisset
         @csrf
-        <input type="submit" value="Crear">
+        <input type="submit" value="Enviar">
     </form>    
 @endsection

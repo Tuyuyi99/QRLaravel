@@ -137,29 +137,33 @@ public function updateDocumento(Request $request){
   
   $documentoAntiguo = $qr->documento;
 
-  foreach ($request->documento as $file) {
-    $qr->nombre = $request->nombre;
-    $qr->id_servicio = $request->id_servicio;
+  if ($request->documento != NULL){
 
-    $now = date('Y-m-d H-i-s');
-    $nombre = Carbon::createFromFormat('Y-m-d H-i-s', $now, 'Europe/Paris')->format('d-m-Y H-i-s') . ' - ';
-    $nombre = $nombre . $file->getClientOriginalName();
+    foreach ($request->documento as $file) {
+      $qr->nombre = $request->nombre;
+      $qr->id_servicio = $request->id_servicio;
 
-    $file->move(public_path('assets/servicios/' . $servicioNuevo->servicio . '/documentos/'), $nombre);
+      $now = date('Y-m-d H-i-s');
+      $nombre = Carbon::createFromFormat('Y-m-d H-i-s', $now, 'Europe/Paris')->format('d-m-Y H-i-s') . ' - ';
+      $nombre = $nombre . $file->getClientOriginalName();
 
-    $qr->documento = $nombre;
+      $file->move(public_path('assets/servicios/' . $servicioNuevo->servicio . '/documentos/'), $nombre);
 
-    $documentoNuevo = $qr->documento;
+      $qr->documento = $nombre;
 
-    $rutaNueva = "assets/servicios/" . $servicioNuevo->servicio . '/documentos/' . $documentoAntiguo;
-    $rutaAntigua = "assets/servicios/" . $servicioAntiguo->servicio . '/documentos/' . $documentoAntiguo;  
-  
-    $file = new Filesystem;
-    $file->delete($rutaAntigua);    
+      $documentoNuevo = $qr->documento;
+
+      $rutaNueva = "assets/servicios/" . $servicioNuevo->servicio . '/documentos/' . $documentoAntiguo;
+      $rutaAntigua = "assets/servicios/" . $servicioAntiguo->servicio . '/documentos/' . $documentoAntiguo;  
+    
+      $file = new Filesystem;
+      $file->delete($rutaAntigua);   
+
+  }
+  $qr->documento = $nombre;
 }
 
-
-  $qr->documento = $nombre;
+$qr->nombre = $request->nombre;
 
   $qr->save();
   return redirect()->route('qr.index');
