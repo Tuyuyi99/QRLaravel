@@ -120,6 +120,12 @@
         @else
           <button class ="button modifybutton" type="submit">Modificar <i class="far fa-save"></i></button>
 
+            {{-- Generar QRs Estáticos (Ejemplo)
+
+              {{ QrCode::size(100)->generate('https://www.formacionsspa.es/gesforma-sspa/') }} 
+
+            --}}
+
           <div class="qr">{{ QrCode::size(200)      
           ->generate(route('acortar.linkEnlace', $qr->codigo)) }} </div>
 
