@@ -15,3 +15,7 @@ window.addEventListener('load', function(){
     })
 });    
 
+function texto(){
+    document.getElementById('creador').style.color = "black";
+    document.getElementById('creador').classList.remove('noHover');
+}

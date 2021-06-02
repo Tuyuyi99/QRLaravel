@@ -19,8 +19,9 @@ class MainController extends Controller
       $serviciosListQr = Servicio::All();
       $data['qrList'] = $qrList;
       $data['serviciosListQr'] = $serviciosListQr;
+      $mensaje = "Lo sentimos, actualmente no existe ningún QR. Intente volver más tarde.";
 
-      return view('front', $data);
+      return view('front', $data, compact('mensaje'));
     }
 
     /**

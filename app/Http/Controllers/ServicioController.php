@@ -41,8 +41,16 @@ class ServicioController extends Controller
      */
     public function store(Request $request)
     {
+        $serviciosList = Servicio::All();
+
         $servicio = new Servicio();
         $servicio->servicio = $request->servicio;
+
+        foreach($serviciosList as $servicioExistente){
+            if ($servicio->servicio == $servicioExistente->servicio){
+                return redirect()->route('servicio.index')->with('message', 'Ese servicio ya existe. Prueba a crear otro que no se llame ' . $servicio->servicio);
+            }
+        }
 
         $rutaQr = "assets/servicios/" . $servicio->servicio . '/qr';
         $rutaDocumentos = "assets/servicios/" . $servicio->servicio . '/documentos';

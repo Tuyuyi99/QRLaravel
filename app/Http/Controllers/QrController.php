@@ -20,8 +20,9 @@ class QrController extends Controller
       $serviciosListQr = Servicio::All();
       $data['qrList'] = $qrList;
       $data['serviciosListQr'] = $serviciosListQr;
-      
-      return view('admin/index', $data);
+
+      $mensaje = "Lo sentimos, actualmente no existe ningún servicio creado. Intente crear uno primero para poder hacer un QR.";
+      return view('admin/index', $data, compact('mensaje'));
     }
 
     public function createDocumento(){
@@ -39,7 +40,7 @@ class QrController extends Controller
       $servicios = Servicio::find($request->id_servicio);
 
       $qr->nombre = $request->nombre;
-      $qr->codigo = Str::random(6);    
+      $qr->codigo = Str::random(10);    
       $qr->enlace = $request->enlace;
       $qr->id_servicio = $request->id_servicio;
       $ruta = "assets/servicios/" . $servicios->servicio . "/qr/" . $qr->nombre;

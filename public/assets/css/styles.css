@@ -49,6 +49,10 @@ select:hover, select:focus {
   top: 5px;
 }
 
+.noHover{
+  cursor: default
+}
+
 .qr{
   margin: 5px 5px 5px 5px;
 }
