@@ -7,7 +7,14 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'QRLaravel') }}</title>
+    <title>QRLaravel</title>
+
+    <script src="https://kit.fontawesome.com/2c6ef1311b.js" crossorigin="anonymous"></script>
+    <link rel="icon" type="image/png" href={{ url('assets/img/favicon.png') }}>
+    <link rel="stylesheet" href="{{ url('assets/css/styles.css') }}">
+    
+    <script src="{{ url('assets/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ url('assets/js/app.js') }}"></script>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -20,36 +27,25 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    <img style="position: absolute; top: 0; right: 0;" src="{{ url("assets/img/sas.jpg") }}" alt="Logo del SAS">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'QRLaravel') }}
-                </a>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
 
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Entrar') }}</a>
-                                </li>
+                                    <a class="abrirsesion" href="{{ route('login') }}">{{ __('Entrar') }}</a>
                             @endif
 
                             @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
-                                </li>
+                                    <a class="registrarse" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
                                 </a>
@@ -65,9 +61,7 @@
                                         @csrf
                                     </form>
                                 </div>
-                            </li>
-                        @endguest
-                    </ul>
+                        @endguest   
                 </div>
             </div>
         </nav>

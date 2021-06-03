@@ -48,18 +48,25 @@
   @endif
 
   @if (isset($userList))
-  @foreach ($userList as $user)
-      <h3>{{ $user->name }}</h3>
-      <form action="{{ route('user.destroy', $user->id) }}" method="POST">
-          @csrf
-          @method("DELETE")
-          <button class="button deletebutton" onclick="return confirm('¿Seguro que quieres eliminarlo?')"
-              type="submit">Borrar <i class="fa fa-trash-alt"></i></button>
-      </form>
-  @endforeach
-  <hr style="border:2px solid black;"><br>
-@endif
 
+    @if($userList->isEmpty())
+      <div style="color: red; margin-bottom: 10px;">
+        {{ $mensaje }}
+      </div>
+  @else
+
+    @foreach ($userList as $user)
+        <h3>{{ $user->name }}</h3>
+        <form action="{{ route('user.destroy', $user->id) }}" method="POST">
+            @csrf
+            @method("DELETE")
+            <button class="button deletebutton" onclick="return confirm('¿Seguro que quieres eliminarlo?')"
+                type="submit">Borrar <i class="fa fa-trash-alt"></i></button>
+        </form>
+    @endforeach
+    <hr style="border:2px solid black;"><br>
+  @endif
+@endif
   @if (isset($qrList))
 
   @if($serviciosListQr->isEmpty())

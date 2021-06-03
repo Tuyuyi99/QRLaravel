@@ -225,60 +225,52 @@ li a:hover {
   align-self: center;
 }
 
-.form-register {
-  width: 400px;
-  background: #24303c;
-  padding: 30px;
-  margin: auto;
-  margin-top: 100px;
-  border-radius: 4px;
-  font-family: 'calibri';
-  color: white;
-  box-shadow: 7px 13px 37px #000;
-}
-
-.form-register h4 {
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-
-.controls {
-  width: 100%;
-  background: #24303c;
-  padding: 10px;
-  border-radius: 4px;
-  margin-bottom: 16px;
-  border: 1px solid #1f53c5;
-  font-family: 'calibri';
-  font-size: 18px;
-  color: white;
-}
-
-.form-register p {
-  height: 40px;
-  text-align: center;
-  font-size: 18px;
-  line-height: 40px;
-}
-
-.form-register a {
-  color: white;
-  text-decoration: none;
-}
-
-.form-register a:hover {
-  color: white;
-  text-decoration: underline;
-}
-
-.form-register .botons {
-  width: 100%;
-  background: #1f53c5;
+.cerrarsesion{
+  background-color: #e23b3b;
+  color: white; 
+  font-weight: bold;
   border: none;
-  padding: 12px;
-  color: white;
-  margin: 16px 0;
+  padding: 6px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
   font-size: 16px;
+  margin: 10px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.registrarse{
+  background-color: #2bc251;
+  color: rgb(0, 0, 0); 
+  font-weight: bold;
+  border: none;
+  padding: 6px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 16px;
+}
+
+.abrirsesion{
+  background-color: #f8f53c;
+  color: rgb(0, 0, 0); 
+  font-weight: bold;
+  border: none;
+  padding: 6px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 0px 0px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 16px;
 }
 
   

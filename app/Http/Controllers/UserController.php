@@ -23,8 +23,9 @@ class UserController extends Controller
         
           $users = DB::table('users')->Where('rol_id', '=', 2)->get();
           $data['userList'] = $users;
-    
-          return view('admin/index', $data);
+          $mensaje = "No se encuentra ningún usuario sin permisos especiales registrado.";
+
+          return view('admin/index', $data, compact('mensaje'));
         
     
     }
