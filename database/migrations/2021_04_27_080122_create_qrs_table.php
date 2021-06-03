@@ -23,6 +23,9 @@ class CreateQrsTable extends Migration
             $table->foreignId('id_servicio')->constraint('servicios')
             ->onUpdate('cascade')
             ->onDelete('cascade');
+            $table->foreignId('id_usuario')->constraint('users')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

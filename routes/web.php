@@ -23,6 +23,7 @@ Route::get('/', 'App\Http\Controllers\MainController@index')->name('main');
 
 Route::redirect('admin', 'admin/qr');
 Route::redirect('buscador', '/');
+Route::redirect('home', 'admin/');
 
 //CRUD de QRs
 
@@ -37,7 +38,7 @@ Route::delete('admin/destroy/qr/{id}', 'App\Http\Controllers\QrController@destro
 Route::get('admin/editEnlace/qr/{id}', 'App\Http\Controllers\QrController@editEnlace')->name('qr.editEnlace');
 Route::get('admin/editDocumento/qr/{id}', 'App\Http\Controllers\QrController@editDocumento')->name('qr.editDocumento');
 Route::get('documento/{codigo}', '\App\Http\Controllers\QrController@acortarLinkDocumento')->name('acortar.linkDocumento');
-Route::get('{codigo}', '\App\Http\Controllers\QrController@acortarLinkEnlace')->name('acortar.linkEnlace');
+Route::get('qr/{codigo}', '\App\Http\Controllers\QrController@acortarLinkEnlace')->name('acortar.linkEnlace');
 Route::get('admin/qr/buscador','\App\Http\Controllers\QrController@buscador')->name('qr.buscador');
 Route::get('buscador/filtrar','\App\Http\Controllers\QrController@filtrarServicio')->name('qr.filtrar');
 
@@ -50,3 +51,10 @@ Route::post('admin/store/servicio', '\App\Http\Controllers\ServicioController@st
 Route::patch('admin/update/servicio/{id}', 'App\Http\Controllers\ServicioController@update')->name('servicio.update');
 Route::delete('admin/destroy/servicio/{id}', 'App\Http\Controllers\ServicioController@destroy')->name('servicio.destroy');
 Route::get('admin/edit/servicio/{id}', 'App\Http\Controllers\ServicioController@edit')->name('servicio.edit');
+
+Auth::routes();
+
+//CRUD de Usuarios
+
+Route::get('admin/usuario/', 'App\Http\Controllers\UserController@index')->name('user.index');
+Route::get('admin/destroy/usuario/{id}', 'App\Http\Controllers\UserController@destroy')->name('user.destroy');

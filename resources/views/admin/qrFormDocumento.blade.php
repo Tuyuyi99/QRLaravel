@@ -3,6 +3,7 @@
 @section('content')
 
 @isset($qr)
+<h3>Atención, si se quiere editar el servicio, Debe de volver a subirse el documento.</h3>
     <form action="{{ route('qr.updateDocumento', ['id' => $qr->id]) }}" method="POST" enctype="multipart/form-data">
         <div style="height: 100px; margin-right: 5px;">
 

@@ -56,7 +56,6 @@
                 @endforeach
             @endif
         </select>
-        <button class="imprimir" onclick="window.print()">Imprimir</button>
           
         @if ($qr->enlace == NULL)
               

@@ -11,9 +11,31 @@
     </head>
     <body>
         <div>
+            {{-- Login y registro siempre --}}
+            
+            @guest
+            @if (Route::has('login'))
+                <a href="{{ route('login') }}">{{ __('Entrar') }}</a><br>
+            @endif
+
+            @if (Route::has('register'))
+                <a href="{{ route('register') }}">{{ __('Registrarse') }}</a><br>
+            @endif
+            @else
+                Bienvenido, {{ Auth::user()->name }}
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();"><br>
+                    {{ __('Cerrar sesión') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST">
+                    @csrf
+                </form>
+        @endguest
+
             <img style="   position: absolute; top: 0; right: 0;" src="{{ url("assets/img/sas.jpg") }}" alt="Logo del SAS">
             @yield("content")
         </div>
-        <p id="creador" class="noHover" onclick="texto()" style="color:white; margin-top: 200px">Creado por Pablo De La Cuesta Espinosa</p>
     </body>
 </html>
