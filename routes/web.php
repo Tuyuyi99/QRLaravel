@@ -57,4 +57,4 @@ Auth::routes();
 //CRUD de Usuarios
 
 Route::get('admin/usuario/', 'App\Http\Controllers\UserController@index')->name('user.index');
-Route::get('admin/destroy/usuario/{id}', 'App\Http\Controllers\UserController@destroy')->name('user.destroy');
+Route::delete('admin/destroy/usuario/{id}', 'App\Http\Controllers\UserController@destroy')->name('user.destroy');

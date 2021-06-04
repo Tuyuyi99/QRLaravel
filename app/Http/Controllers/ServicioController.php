@@ -76,7 +76,7 @@ class ServicioController extends Controller
 
         foreach($serviciosList as $servicioExistente){
             if (($servicio->servicio == $servicioExistente->servicio) && ($usuario->id == $servicio->id_usuario)){
-                return redirect()->route('servicio.index')->with('message', 'Ese servicio ya existe. Prueba a crear otro que no se llame ' . $servicio->servicio);
+                return redirect()->route('servicio.index')->with('message', 'Ese servicio ya existe. Prueba a crear otro que no se llame ' . $servicio->servicio . '.');
             }
         }
 

@@ -5,7 +5,7 @@
 <div class="container" style="text-align: center;">
 
   @if(session()->has('message'))
-  <div style="color: red">
+  <div style="color: red; font-weight: bold">
       {{ session()->get('message') }}
   </div>
 @endif
@@ -50,7 +50,7 @@
   @if (isset($userList))
 
     @if($userList->isEmpty())
-      <div style="color: red; margin-bottom: 10px;">
+      <div style="color: red; margin-bottom: 10px; font-weight: bold;">
         {{ $mensaje }}
       </div>
   @else
@@ -70,7 +70,7 @@
   @if (isset($qrList))
 
   @if($serviciosListQr->isEmpty())
-    <div style="color: red; margin-bottom: 10px;">
+    <div style="color: red; margin-bottom: 10px; font-weight: bold;">
       {{ $mensaje }}
     </div>
   @else
@@ -154,8 +154,8 @@
           @foreach($userListQr as $usuario)
               @if ($qr->id_usuario == $usuario->id)
                   <div class="col-sm-4">
-                      <h3 style="display: inline; text-align:center; border:none;"> Usuario creador: </h3><br>
-                      <h5 style="color:gray">{{ $usuario->name }}</h5><br>
+                      <h3 style="display: inline;"> Usuario creador: </h3><br>
+                      {{ $usuario->name . ' ' . $usuario->surname }}<br>
                   </div>
               @endif
           @endforeach

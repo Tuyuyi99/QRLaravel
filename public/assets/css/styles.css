@@ -230,7 +230,7 @@ li a:hover {
   color: white; 
   font-weight: bold;
   border: none;
-  padding: 6px 16px;
+  padding: 0px 8px 8px 8px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -239,6 +239,7 @@ li a:hover {
   transition-duration: 0.4s;
   cursor: pointer;
   border-radius: 16px;
+  line-height: 9px;
 }
 
 .registrarse{
@@ -246,23 +247,7 @@ li a:hover {
   color: rgb(0, 0, 0); 
   font-weight: bold;
   border: none;
-  padding: 6px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 10px 2px;
-  transition-duration: 0.4s;
-  cursor: pointer;
-  border-radius: 16px;
-}
-
-.abrirsesion{
-  background-color: #f8f53c;
-  color: rgb(0, 0, 0); 
-  font-weight: bold;
-  border: none;
-  padding: 6px 16px;
+  padding: 5px 10px 10px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -271,6 +256,24 @@ li a:hover {
   transition-duration: 0.4s;
   cursor: pointer;
   border-radius: 16px;
+  line-height: 9px;
+}
+
+.abrirsesion{
+  background-color: #f8f53c;
+  color: rgb(0, 0, 0); 
+  font-weight: bold;
+  border: none;
+  padding: 5px 10px 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 0px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 16px;
+  line-height: 9px;
 }
 
   

@@ -94,8 +94,8 @@ class UserController extends Controller
     public function destroy($id)
     {
       $user = User::find($id);
-      DB::table('qrs')->where('id_usuario', '=', $usuario->id)->delete();
-      DB::table('servicios')->where('id_usuario', '=', $usuario->id)->delete();
+      DB::table('qrs')->where('id_usuario', '=', $user->id)->delete();
+      DB::table('servicios')->where('id_usuario', '=', $user->id)->delete();
 
       $user->delete();
       
