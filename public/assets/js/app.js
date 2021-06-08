@@ -13,9 +13,4 @@ window.addEventListener('load', function(){
             document.getElementById("resultados").innerHTML = "";
         }
     })
-});    
-
-function texto(){
-    document.getElementById('creador').style.color = "black";
-    document.getElementById('creador').classList.remove('noHover');
-}
+});
