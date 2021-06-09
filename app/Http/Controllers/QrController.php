@@ -82,7 +82,7 @@ class QrController extends Controller
     }
 
       QrCode::size(500)
-      ->generate(route('acortar.linkEnlace', $qr->codigo), public_path('assets/usuarios/' . $usuario->name . ' ' . $usuario->surname .'/servicios/' . $servicios->servicio . '/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+      ->generate($qr->enlace, public_path('assets/usuarios/' . $usuario->name . ' ' . $usuario->surname .'/servicios/' . $servicios->servicio . '/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
 
       $qr->save();
 
@@ -177,7 +177,7 @@ class QrController extends Controller
       
 
     QrCode::size(500)
-    ->generate(route('acortar.linkEnlace', $qr->codigo), public_path("assets/usuarios/". $usuario->name . ' ' . $usuario->surname . "/servicios/" . $servicioNuevo->servicio . '/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+    ->generate($qr->enlace, public_path("assets/usuarios/". $usuario->name . ' ' . $usuario->surname . "/servicios/" . $servicioNuevo->servicio . '/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
 
     $qr->enlace = $request->enlace;
     $qr->save();
@@ -227,7 +227,7 @@ public function updateDocumento(Request $request){
       }    
   
       QrCode::size(500)
-      ->generate(route('acortar.linkEnlace', $qr->codigo), public_path("assets/usuarios/". $usuario->name . ' ' . $usuario->surname . "/servicios/" . $servicioNuevo->servicio . '/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
+      ->generate(route('acortar.linkDocumento', $qr->codigo), public_path("assets/usuarios/". $usuario->name . ' ' . $usuario->surname . "/servicios/" . $servicioNuevo->servicio . '/qr/' . $qr->nombre . '/' . $qr->nombre . '.svg'));
   
 
       $qr->documento = $nombre;

@@ -17,13 +17,12 @@ use Illuminate\Support\Facades\Storage;
 
 //Vista del cliente
 
-Route::get('/', 'App\Http\Controllers\MainController@index')->name('main');
-
 //Redirigir desde una vista a otra
 
 Route::redirect('admin', 'admin/qr');
-Route::redirect('buscador', '/');
+Route::redirect('buscador', 'admin/');
 Route::redirect('home', 'admin/');
+Route::redirect('/', 'admin/');
 
 //CRUD de QRs
 

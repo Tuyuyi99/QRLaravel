@@ -179,10 +179,10 @@
             --}}
 
           <div class="qr">{{ QrCode::size(200)      
-          ->generate(route('acortar.linkEnlace', $qr->codigo)) }} </div>
+          ->generate($qr->enlace) }} </div>
 
-          <a class="button shortlink" href="{{ route('acortar.linkEnlace', $qr->codigo) }}" target="_blank"> <i class="fa fa-link"></i>
-          {{ route('acortar.linkEnlace', $qr->codigo) }} </a> <br>
+          <a class="button shortlink" href="{{ $qr->enlace }}" target="_blank"> <i class="fa fa-link"></i>
+          {{ $qr->enlace }} </a> <br>
           <a class="button editbutton" href="{{ route('qr.editEnlace', $qr->id) }}">Editar <i class="fa fa-edit"></i></a>
         @endif
             
