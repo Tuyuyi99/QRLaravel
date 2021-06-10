@@ -26,13 +26,12 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    public function register(Request $request)
-{
+    public function register(Request $request){
     $this->validator($request->all())->validate();
 
     event(new Registered($user = $this->create($request->all())));
 
-    return redirect($this->redirectPath())->with('message', 'Your message');
+    return redirect($this->redirectPath());
 }
 
     /**
