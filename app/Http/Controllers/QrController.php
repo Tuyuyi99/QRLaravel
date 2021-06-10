@@ -21,7 +21,6 @@ class QrController extends Controller
     }
 
     public function index(){
-
       $usuarioId = auth()->user()->id;
       $rol = auth()->user()->rol->rol;
 

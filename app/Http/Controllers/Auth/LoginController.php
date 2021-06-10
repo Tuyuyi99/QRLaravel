@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Carbon\Carbon;
+use App\Models\Userlog;
+use App\Models\User;
+use Auth;
+use Illuminate\Support\Facades\DB;
 
 class LoginController extends Controller
 {
@@ -26,7 +31,22 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    public function authenticated(){
+        $idUsuario = auth()->user()->id;
+        $usuario = DB::table('users')->where('id', $idUsuario)->first();
+
+        $userlog = new Userlog();
+        $userlog->nombre = $usuario->name;
+        $userlog->apellidos = $usuario->surname;
+        $userlog->email = $usuario->email;
+        $userlog->fecha = Carbon::now();
+        $userlog->id_usuario = $usuario->id;
+
+        $userlog->save();
+
+        return view('admin/index');
+}
+
     
 
     /**

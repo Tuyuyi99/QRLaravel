@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Rol;
+use App\Models\Userlog;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -46,5 +47,9 @@ class User extends Authenticatable
 
     public function rol(){
         return $this->belongsTo(Rol::class);
+    }
+
+    public function user(){
+        return $this->belongsTo(Userlog::class, 'id_usuario');
     }
 }

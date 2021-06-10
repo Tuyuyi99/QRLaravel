@@ -20,9 +20,10 @@ use Illuminate\Support\Facades\Storage;
 //Redirigir desde una vista a otra
 
 Route::redirect('admin', 'admin/qr');
-Route::redirect('buscador', 'admin/');
-Route::redirect('home', 'admin/');
-Route::redirect('/', 'admin/');
+Route::redirect('buscador', 'admin');
+Route::redirect('home', 'admin');
+Route::redirect('/', 'admin');
+Route::redirect('/userlog', 'admin');
 
 //CRUD de QRs
 
@@ -57,3 +58,7 @@ Auth::routes();
 
 Route::get('admin/usuario/', 'App\Http\Controllers\UserController@index')->name('user.index');
 Route::delete('admin/destroy/usuario/{id}', 'App\Http\Controllers\UserController@destroy')->name('user.destroy');
+
+//Log de usuarios
+
+Route::post('/userlog', '\App\Http\Controllers\Auth\LoginController@authenticated')->name('userlog.store');
